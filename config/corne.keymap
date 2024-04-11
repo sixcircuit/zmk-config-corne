@@ -24,10 +24,10 @@
             mods = <(MOD_LCTL)>;
         };
 
-        ctrlentdel: ctrl_enter_delete {
+        ctrlentbspc: ctrl_enter_backspace {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&kp RET>, <&kp DEL>;
+            bindings = <&kp RET>, <&kp BSPC>;
             mods = <(MOD_LCTL)>;
         };
     };
@@ -61,7 +61,7 @@
                &kp N             &kp M          &kp COMMA      &kp DOT        &ctrlfslhdollar &mt LCTRL BSLH
 
                &kp LGUI          &mo 1          &mo 2
-               &kp SPACE         &ctrlentdel    &kp RALT
+               &kp SPACE         &ctrlentbspc   &kp RALT
             >;
         };
 
