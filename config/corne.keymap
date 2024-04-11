@@ -23,6 +23,13 @@
             bindings = <&kp FSLH>, <&kp DLLR>;
             mods = <(MOD_LCTL)>;
         };
+
+        ctrlentdel: ctrl_enter_delete {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp RET>, <&kp DEL>;
+            mods = <(MOD_LCTL)>;
+        };
     };
 };
 
@@ -52,7 +59,7 @@
                &kp H             &kp J          &kp K          &kp L          &kp SEMI        &ctrlqtgrv
 
                &kp LSHFT         &kp Z          &kp X          &kp C          &kp V           &kp B
-               &kp N             &kp M          &kp COMMA      &kp DOT        &ctrlfslhdollar &kp RET
+               &kp N             &kp M          &kp COMMA      &kp DOT        &ctrlfslhdollar &ctrlentdel
 
                &kp LGUI          &mo 1          &mo 2
                &kp SPACE         &kp RET        &kp RALT
