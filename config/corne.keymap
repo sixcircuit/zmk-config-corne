@@ -69,7 +69,7 @@
             bindings = <
 
                &none            &none           &none          &none           &none           &none
-               &kp CARET        &kp LPAR        &kp RPAR       &kp STAR        &none           &none
+               &kp CARET        &kp LPAR        &kp RPAR       &kp STAR        &none           &kp BSPC
 
                &kp TILDE        &kp EXCL        &kp AT         &kp HASH        &kp DLLR        &kp PRCNT
                &kp AMPS         &kp LBRC        &kp RBRC       &kp LBKT        &kp RBKT        &none
@@ -85,7 +85,7 @@
         key_pad {
             bindings = <
                &none          &none          &none          &none          &none          &none
-               &none          &kp N7         &kp N8         &kp N9         &kp EQUAL      &none
+               &none          &kp N7         &kp N8         &kp N9         &kp EQUAL      &kp BSPC
 
                &none          &none          &none          &mo 4          &mo 3          &none
                &kp PLUS       &kp N4         &kp N5         &kp N6         &kp STAR       &none
