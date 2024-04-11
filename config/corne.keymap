@@ -78,7 +78,7 @@
                &kp PIPE         &kp UNDER       &kp MINUS      &kp STAR        &kp EQUAL       &none
 
                &trans            &trans         &trans
-               &kp UNDER         &trans         &trans
+               &trans            &trans         &trans
             >;
         };
 
