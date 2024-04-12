@@ -61,7 +61,7 @@
                &kp N             &kp M          &kp COMMA      &kp DOT        &ctrlfslhdollar &mt LCTRL BSLH
 
                &kp LGUI          &mo 1          &mo 2
-               &kp SPACE         &ctrlentbspc   &kp RALT
+               &ctrlentbspc      &kp SPACE      &kp RALT
             >;
         };
 
