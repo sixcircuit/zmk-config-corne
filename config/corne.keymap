@@ -67,7 +67,7 @@
                &mt LCTRL ESC     &kp A          &lt NUMPAD S     &kp D          &lt ARROWS F    &kp G
                &kp H             &kp J          &kp K            &kp L          &kp SEMI        &ctrlqtgrv
 
-               &kp LSHIFT        &kp Z          &kp X            &lt CONTROLS C &lt SYM_RIGHT V &kp B
+               &none             &kp Z          &kp X            &lt CONTROLS C &lt SYM_RIGHT V &kp B
                &kp N             &lt SYM_LEFT M &kp COMMA        &kp DOT        &ctrlfslhdollar &mt LSHIFT BSLH
 
                &kp LGUI          &kp LSHIFT     &kp SPACE
