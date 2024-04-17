@@ -80,8 +80,7 @@
 
         default_layer {
          bindings = <
-            hands(
-               &kp TAB,           &kp Q,          &kp W,            &kp E,          &kp R,           &kp T,
+            hands(&kp TAB,           &kp Q,          &kp W,            &kp E,          &kp R,           &kp T, \
                &mt LCTRL ESC,     &kp A,          &lt NUMPAD S,     &kp D,          &lt ARROWS F,    &kp G,
                &none,             &kp Z,          &kp X,            &lt CONTROLS C, &lt SYM_RIGHT V, &kp B,
                &kp LGUI,          &kp LSHIFT,     &kp SPACE,
