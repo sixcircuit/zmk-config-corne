@@ -46,7 +46,7 @@
    lt1, lt2, lt3, lt4, lt5, lt6, \
    lm1, lm2, lm3, lm4, lm5, lm6, \
    lb1, lb2, lb3, lb4, lb5, lb6, \
-   lth1, lth2, lth3 \
+   lth1, lth2, lth3, \
    rt1, rt2, rt3, rt4, rt5, rt6, \
    rm1, rm2, rm3, rm4, rm5, rm6, \
    rb1, rb2, rb3, rb4, rb5, rb6, \
@@ -59,7 +59,7 @@
       rm1, rm2, rm3, rm4, rm5, rm6, \
       lb1, lb2, lb3, lb4, lb5, lb6, \
       rb1, rb2, rb3, rb4, rb5, rb6, \
-      lth1, lth2, lth3 \
+      lth1, lth2, lth3, \
       rth1, rth2, rth3 \
    >;
 
