@@ -40,7 +40,29 @@
 #define ARROWS 4
 #define CONTROLS 5
 
-#define hands(l)
+// setup hand mapping define and fix up symbol tables
+
+#define hands( \
+   lt1, lt2, lt3, lt4, lt5, lt6, \
+   lm1, lm2, lm3, lm4, lm5, lm6, \
+   lb1, lb2, lb3, lb4, lb5, lb6, \
+   lt1, lt2, lt3 \
+
+   rt1, rt2, rt3, rt4, rt5, rt6, \
+   rm1, rm2, rm3, rm4, rm5, rm6, \
+   rb1, rb2, rb3, rb4, rb5, rb6, \
+   rt1, rt2, rt3 \
+) \
+   bindings = < \
+      lt1, lt2, lt3, lt4, lt5, lt6, \
+      rt1, rt2, rt3, rt4, rt5, rt6, \
+      lm1, lm2, lm3, lm4, lm5, lm6, \
+      rm1, rm2, rm3, rm4, rm5, rm6, \
+      lb1, lb2, lb3, lb4, lb5, lb6, \
+      rb1, rb2, rb3, rb4, rb5, rb6, \
+      lt1, lt2, lt3 \
+      rt1, rt2, rt3 \
+   >;
 
 
 / {
@@ -60,19 +82,30 @@
         compatible = "zmk,keymap";
 
         default_layer {
-            bindings = <
-               &kp TAB           &kp Q          &kp W            &kp E          &kp R           &kp T
-               &kp Y             &kp U          &kp I            &kp O          &kp P           &kp BSPC
+            hands(
+               &kp TAB,           &kp Q,          &kp W,            &kp E,          &kp R,           &kp T,
+               &mt LCTRL ESC,     &kp A,          &lt NUMPAD S,     &kp D,          &lt ARROWS F,    &kp G,
+               &none,             &kp Z,          &kp X,            &lt CONTROLS C, &lt SYM_RIGHT V, &kp B,
+               &kp LGUI,          &kp LSHIFT,     &kp SPACE,
 
-               &mt LCTRL ESC     &kp A          &lt NUMPAD S     &kp D          &lt ARROWS F    &kp G
-               &kp H             &kp J          &kp K            &kp L          &kp SEMI        &ctrlqtgrv
-
-               &none             &kp Z          &kp X            &lt CONTROLS C &lt SYM_RIGHT V &kp B
-               &kp N             &lt SYM_LEFT M &kp COMMA        &kp DOT        &ctrlfslhdollar &mt LSHIFT BSLH
-
-               &kp LGUI          &kp LSHIFT     &kp SPACE
-               &kp SPACE         &ctrlentbspc   &kp RALT
-            >;
+               &kp Y,             &kp U,          &kp I,            &kp O,        &kp P,           &kp BSPC,
+               &kp H,             &kp J,          &kp K,            &kp L,        &kp SEMI,        &ctrlqtgrv,
+               &kp N,             &lt SYM_LEFT M, &kp COMMA,       &kp DOT,       &ctrlfslhdollar, &mt LSHIFT BSLH,
+               &kp SPACE,         &ctrlentbspc,   &kp RALT
+            )
+//            bindings = <
+ //              &kp TAB           &kp Q          &kp W            &kp E          &kp R           &kp T
+  //             &kp Y             &kp U          &kp I            &kp O          &kp P           &kp BSPC
+//
+ //              &mt LCTRL ESC     &kp A          &lt NUMPAD S     &kp D          &lt ARROWS F    &kp G
+  //             &kp H             &kp J          &kp K            &kp L          &kp SEMI        &ctrlqtgrv
+//
+ //              &none             &kp Z          &kp X            &lt CONTROLS C &lt SYM_RIGHT V &kp B
+  //             &kp N             &lt SYM_LEFT M &kp COMMA        &kp DOT        &ctrlfslhdollar &mt LSHIFT BSLH
+//
+ //              &kp LGUI          &kp LSHIFT     &kp SPACE
+  //             &kp SPACE         &ctrlentbspc   &kp RALT
+   //         >;
         };
 
         symbol_left {
