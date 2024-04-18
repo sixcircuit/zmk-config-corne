@@ -9,40 +9,41 @@
 #include <dt-bindings/zmk/bt.h>
 
 / {
-    behaviors {
-        ctrlqtgrv: ctrl_quote_grave {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp SQT>, <&kp GRAVE>;
-            mods = <(MOD_LCTL)>;
-        };
+   behaviors {
+      ctrlqtgrv: ctrl_quote_grave {
+         compatible = "zmk,behavior-mod-morph";
+         #binding-cells = <0>;
+         bindings = <&kp SQT>, <&kp GRAVE>;
+         mods = <(MOD_LCTL)>;
+      };
 
-        ctrlfslhdollar: ctrl_fslash_dollar {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp FSLH>, <&kp DLLR>;
-            mods = <(MOD_LCTL)>;
-        };
+      ctrlslhdlr: ctrl_fslash_dollar {
+         compatible = "zmk,behavior-mod-morph";
+         #binding-cells = <0>;
+         bindings = <&kp FSLH>, <&kp DLLR>;
+         mods = <(MOD_LCTL)>;
+      };
 
-        ctrlentbspc: ctrl_enter_backspace {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp RET>, <&kp BSPC>;
-            mods = <(MOD_LCTL)>;
-        };
-    };
+      ctrlentbspc: ctrl_enter_backspace {
+         compatible = "zmk,behavior-mod-morph";
+         #binding-cells = <0>;
+         bindings = <&kp RET>, <&kp BSPC>;
+         mods = <(MOD_LCTL)>;
+      };
+   };
 };
 
 #define BASE 0
-#define SYM_LEFT 1
-#define SYM_RIGHT 2
-#define NUMPAD 3
-#define ARROWS 4
-#define CONTROLS 5
+#define TERMS 1
+#define CODE1 2
+#define CODE2 3
+#define NUMPAD 4
+#define ARROWS 5
+#define CTRLS 6
 
 // setup hand mapping define and fix up symbol tables
 
-#define hands( \
+#define hands(layer_name \
    lt1, lt2, lt3, lt4, lt5, lt6, \
    lm1, lm2, lm3, lm4, lm5, lm6, \
    lb1, lb2, lb3, lb4, lb5, lb6, \
@@ -52,6 +53,7 @@
    rb1, rb2, rb3, rb4, rb5, rb6, \
    rth1, rth2, rth3 \
 ) \
+layer_name { \
    bindings = < \
       lt1 lt2 lt3 lt4 lt5 lt6 \
       rt1 rt2 rt3 rt4 rt5 rt6 \
@@ -61,135 +63,91 @@
       rb1 rb2 rb3 rb4 rb5 rb6 \
       lth1 lth2 lth3 \
       rth1 rth2 rth3 \
-   >;
+   >; \
+};
 
+#define right(layer_name \
+   rt1, rt2, rt3, rt4, rt5, rt6, \
+   rm1, rm2, rm3, rm4, rm5, rm6, \
+   rb1, rb2, rb3, rb4, rb5, rb6, \
+   rth1, rth2, rth3 \
+) \
+layer_name { \
+   bindings = < \
+      &none            &none           &none           &none          &none           &none \
+      rt1 rt2 rt3 rt4 rt5 rt6 \
+      &none            &none           &trans          &none          &none           &none \
+      rm1 rm2 rm3 rm4 rm5 rm6 \
+      &none            &none           &none           &none          &none           &none \
+      rb1 rb2 rb3 rb4 rb5 rb6 \
+      &trans           &trans          &trans \
+      rth1 rth2 rth3 \
+   >; \
+};
 
 / {
-    macros {
-        zed_em_kay: zed_em_kay {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings
-                = <&macro_press &kp LSHFT>
-                , <&macro_tap &kp Z &kp M &kp K>
-                , <&macro_release &kp LSHFT>
-                ;
-        };
-    };
+   macros {
+      zed_em_kay: zed_em_kay {
+         compatible = "zmk,behavior-macro";
+         #binding-cells = <0>;
+         bindings
+            = <&macro_press &kp LSHFT>
+            , <&macro_tap &kp Z &kp M &kp K>
+            , <&macro_release &kp LSHFT>
+            ;
+      };
+   };
 
-    keymap {
-        compatible = "zmk,keymap";
+   keymap {
+      compatible = "zmk,keymap";
 
-        default_layer {
-            hands(
-               &kp TAB,           &kp Q,          &kp W,            &kp E,          &kp R,           &kp T,
-               &mt LCTRL ESC,     &kp A,          &lt NUMPAD S,     &kp D,          &lt ARROWS F,    &kp G,
-               &none,             &kp Z,          &kp X,            &lt CONTROLS C, &lt SYM_RIGHT V, &kp B,
-               &kp LGUI,          &kp LSHIFT,     &kp SPACE,
+      hands( base_layer,
+         &kp TAB,         &lt CTRLS Q,    &kp W,          &kp E,         &kp R,          &kp T,
+         &mt LCTRL ESC,   &lt NUMPAD A,   &lt TERMS S,    &lt CODE1 D,   &lt CODE2 F,    &kp G,
+         &none,           &kp Z,          &kp X,          &kp C,         &lt ARROWS V,   &kp B,
+         &kp LGUI,        &kp LSHIFT,     &kp SPACE,
 
-               &kp Y,             &kp U,          &kp I,            &kp O,        &kp P,           &kp BSPC,
-               &kp H,             &kp J,          &kp K,            &kp L,        &kp SEMI,        &ctrlqtgrv,
-               &kp N,             &lt SYM_LEFT M, &kp COMMA,       &kp DOT,       &ctrlfslhdollar, &mt LSHIFT BSLH,
-               &kp SPACE,         &ctrlentbspc,   &kp RALT
-            )
-//            bindings = <
- //              &kp TAB           &kp Q          &kp W            &kp E          &kp R           &kp T
-  //             &kp Y             &kp U          &kp I            &kp O          &kp P           &kp BSPC
-//
- //              &mt LCTRL ESC     &kp A          &lt NUMPAD S     &kp D          &lt ARROWS F    &kp G
-  //             &kp H             &kp J          &kp K            &kp L          &kp SEMI        &ctrlqtgrv
-//
- //              &none             &kp Z          &kp X            &lt CONTROLS C &lt SYM_RIGHT V &kp B
-  //             &kp N             &lt SYM_LEFT M &kp COMMA        &kp DOT        &ctrlfslhdollar &mt LSHIFT BSLH
-//
- //              &kp LGUI          &kp LSHIFT     &kp SPACE
-  //             &kp SPACE         &ctrlentbspc   &kp RALT
-   //         >;
-        };
+         &kp Y,           &kp U,          &kp I,          &kp O,         &kp P,          &kp BSPC,
+         &kp H,           &kp J,          &kp K,          &kp L,         &kp SEMI,       &ctrlqtgrv,
+         &kp N,           &lt LSYM M,     &kp COMMA,      &kp DOT,       &ctrlslhdlr,    &mt LSHIFT BSLH,
+         &kp SPACE,       &ctrlentbspc,   &kp RALT )
 
-        symbol_left {
-            bindings = <
+      right( terminal,
+         &none            &none           &kp AMPS        &kp PIPE       &none           &kp BSPC
+         &kp TILDE        &kp MINUS       &kp EXCL        &none          &kp STAR        &none
+         &none            &none           &none           &none          &none           &none
+         &trans           &trans          &trans )
 
-               &none            &none           &kp EXCL       &kp MINUS       &none           &none
-               &none            &none           &none          &none           &none           &kp BSPC
+      right( code1,
+         &none            &none           &kp LPAR        &kp RPAR       &kp CARET       &kp BSPC
+         &kp PLUS         &kp UNDER       &kp LBRC        &kp RBRC       &kp STAR        &none
+         &kp MINUS        &kp EQUAL       &kp LBKT        &kp RBKT       &kp DOLLAR      &zed_em_kay
+         &trans           &trans          &trans )
 
-               &none            &kp TILDE       &kp HASH       &kp PLUS       &kp STAR        &kp PRCNT
-               &kp AMPS         &kp MINUS       &trans         &none          &none           &none
+      right( code2,
+         &none            &none           &kp AMPS        &kp PIPE       &none           &kp BSPC
+         &none            &kp AT          &kp EXCL        &kp PLUS       &kp STAR        &kp PRCNT
+         &none            &none           &kp HASH        &kp MINUS      &kp PLUS        &none
+         &trans           &trans          &trans )
 
-               &none            &none           &none          &kp MINUS       &kp PLUS        &none
-               &kp PIPE         &kp UNDER       &kp LBKT       &kp RBKT        &kp EQUAL       &none
+      right( numpad,
+         &none            &kp N7          &kp N8          &kp N9         &kp EQUAL       &kp BSPC
+         &kp PLUS         &kp N4          &kp N5          &kp N6         &kp STAR        &none
+         &kp MINUS        &kp N1          &kp N2          &kp N3         &kp FSLH        &kp RET
+         &kp N0           &kp DOT         &trans )
 
-               &trans            &trans         &trans
-               &trans            &trans         &trans
-            >;
-        };
+      hands( arrows,
+         &none            &none           &none           &none          &none           &kp BSPC
+         &none            &kp N7          &kp N8          &kp N9         &kp EQUAL       &none
+         &none            &none           &none           &none          &none           &none
+         &trans           &trans          &trans )
 
-        symbol_right {
-            bindings = <
-
-               &none            &none           &none          &none           &none           &none
-               &none            &kp STAR        &kp LPAR       &kp RPAR        &kp CARET       &kp BSPC
-
-               &none            &none           &trans         &none           &none           &none
-               &kp PLUS         &none           &kp LBRC       &kp RBRC        &kp EQUAL       &none
-
-               &none            &none           &none          &none           &none           &none
-               &kp MINUS        &kp UNDER       &kp LBKT       &kp RBKT        &kp DOLLAR      &none
-
-               &trans            &trans         &trans
-               &trans            &trans         &trans
-            >;
-        };
-
-        numpad {
-            bindings = <
-               &none          &none          &none          &none          &none          &none
-               &none          &kp N7         &kp N8         &kp N9         &kp EQUAL      &kp BSPC
-
-               &none          &none          &none          &none          &none          &none
-               &kp PLUS       &kp N4         &kp N5         &kp N6         &kp STAR       &none
-
-               &none          &none          &none          &none          &none          &zed_em_kay
-               &kp MINUS      &kp N1         &kp N2         &kp N3         &kp FSLH       &kp RET
-
-               &trans        &trans         &trans
-               &kp N0        &kp DOT        &trans
-            >;
-        };
-
-        arrows {
-            bindings = <
-               &none          &none          &none          &none          &none          &none
-               &none          &none          &none          &none          &none          &none
-
-               &none          &none          &none          &none          &none          &none
-               &kp LEFT       &kp DOWN       &kp UP         &kp RIGHT      &none          &none
-
-               &none          &none          &none          &none          &none          &none
-               &none          &none          &none          &none          &none          &none
-
-               &trans        &trans         &trans
-               &trans        &trans         &trans
-            >;
-        };
-
-        controls {
-            bindings = <
-               &none          &none          &none          &none          &none          &none
-               &none          &kp C_BRI_UP   &kp C_MUTE     &kp C_VOL_DN   &kp C_VOL_UP   &none
-
-               &none          &none          &none          &none          &none          &none
-               &none          &kp C_BRI_DN   &kp C_PREV     &kp C_PP       &kp C_NEXT     &none
-
-               &none          &none          &none          &none          &none          &none
-               &none          &none          &none          &none          &none          &none
-
-               &trans        &trans         &trans
-               &trans        &trans         &trans
-            >;
-        };
-
-    };
+      hands( controls,
+         &none            &kp C_BRI_UP    &kp C_MUTE      &kp C_VOL_DN   &kp C_VOL_UP    &none
+         &none            &kp C_BRI_DN    &kp C_PREV      &kp C_PP       &kp C_NEXT      &none
+         &none            &none           &none           &none          &none           &none
+         &trans           &trans          &trans )
+   };
 };
 
 
@@ -365,8 +323,8 @@
 // #define NUM_9 (NUMBER_9) // WARNING: DEPRECATED (DO NOT USE)
 
 // Keyboard ( (Left Parenthesis)
-// #define LEFT_PARENTHESIS                                                                           \
-    (LS(ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_KEYBOARD_9_AND_LEFT_PARENTHESIS)))
+// #define LEFT_PARENTHESIS                                                           \
+   (LS(ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_KEYBOARD_9_AND_LEFT_PARENTHESIS)))
 // #define LPAR (LEFT_PARENTHESIS)
 // #define LPRN (LEFT_PARENTHESIS) // WARNING: DEPRECATED (DO NOT USE)
 
@@ -376,8 +334,8 @@
 // #define NUM_0 (NUMBER_0) // WARNING: DEPRECATED (DO NOT USE)
 
 // Keyboard ) (Right Parenthesis)
-// #define RIGHT_PARENTHESIS                                                                          \
-    (LS(ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_KEYBOARD_0_AND_RIGHT_PARENTHESIS)))
+// #define RIGHT_PARENTHESIS                                                       \
+   (LS(ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_KEYBOARD_0_AND_RIGHT_PARENTHESIS)))
 // #define RPAR (RIGHT_PARENTHESIS)
 // #define RPRN (RIGHT_PARENTHESIS) // WARNING: DEPRECATED (DO NOT USE)
 
@@ -417,24 +375,24 @@
 // #define PLUS (LS(ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_KEYBOARD_EQUAL_AND_PLUS)))
 
 // Keyboard [ and { (Left Bracket and Left Brace)
-// #define LEFT_BRACKET                                                                               \
-    (ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_KEYBOARD_LEFT_BRACKET_AND_LEFT_BRACE))
+// #define LEFT_BRACKET                                                            \
+   (ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_KEYBOARD_LEFT_BRACKET_AND_LEFT_BRACE))
 // #define LBKT (LEFT_BRACKET)
 
 // Keyboard { (Left Brace)
-// #define LEFT_BRACE                                                                                 \
-    (LS(ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_KEYBOARD_LEFT_BRACKET_AND_LEFT_BRACE)))
+// #define LEFT_BRACE                                                              \
+   (LS(ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_KEYBOARD_LEFT_BRACKET_AND_LEFT_BRACE)))
 // #define LBRC (LEFT_BRACE)
 // #define LCUR (LEFT_BRACE) // WARNING: DEPRECATED (DO NOT USE)
 
 // Keyboard ] and } (Right Bracket and Right Brace)
-// #define RIGHT_BRACKET                                                                              \
-    (ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_KEYBOARD_RIGHT_BRACKET_AND_RIGHT_BRACE))
+// #define RIGHT_BRACKET                                                           \
+   (ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_KEYBOARD_RIGHT_BRACKET_AND_RIGHT_BRACE))
 // #define RBKT (RIGHT_BRACKET)
 
 // Keyboard } (Right Brace)
-// #define RIGHT_BRACE                                                                                \
-    (LS(ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_KEYBOARD_RIGHT_BRACKET_AND_RIGHT_BRACE)))
+// #define RIGHT_BRACE                                                             \
+   (LS(ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_KEYBOARD_RIGHT_BRACKET_AND_RIGHT_BRACE)))
 // #define RBRC (RIGHT_BRACE)
 // #define RCUR (RIGHT_BRACE) // WARNING: DEPRECATED (DO NOT USE)
 
@@ -469,8 +427,8 @@
 // #define QUOT (SINGLE_QUOTE) // WARNING: DEPRECATED (DO NOT USE)
 
 // Keyboard " (Quote)
-// #define DOUBLE_QUOTES                                                                              \
-    (LS(ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_KEYBOARD_APOSTROPHE_AND_QUOTE)))
+// #define DOUBLE_QUOTES                                                           \
+   (LS(ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_KEYBOARD_APOSTROPHE_AND_QUOTE)))
 // #define DQT (DOUBLE_QUOTES)
 
 // Keyboard ` and ~ (Grave Accent and Tilde)
@@ -495,8 +453,8 @@
 // #define DOT (PERIOD)
 
 // Keyboard > (Greater Than)
-// #define GREATER_THAN                                                                               \
-    (LS(ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_KEYBOARD_PERIOD_AND_GREATER_THAN)))
+// #define GREATER_THAN                                                            \
+   (LS(ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_KEYBOARD_PERIOD_AND_GREATER_THAN)))
 // #define GT (GREATER_THAN)
 // #define RABT (GREATER_THAN) // WARNING: DEPRECATED (DO NOT USE)
 
@@ -681,8 +639,8 @@
 // #define KP_DOT (ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_KEYPAD_PERIOD_AND_DELETE))
 
 // Keyboard Non-US \ and | (Non-us Backslash and Pipe)
-// #define NON_US_BACKSLASH                                                                           \
-    (ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_KEYBOARD_NON_US_BACKSLASH_AND_PIPE))
+// #define NON_US_BACKSLASH                                                           \
+   (ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_KEYBOARD_NON_US_BACKSLASH_AND_PIPE))
 // #define NON_US_BSLH (NON_US_BACKSLASH)
 // #define NUBS (NON_US_BACKSLASH)
 
@@ -932,8 +890,8 @@
 // #define EXSEL (ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_KEYBOARD_EXSEL))
 
 // Keyboard Currency Unit
-// #define CURU                                                                                       \
-    (ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_CURRENCY_UNIT)) // WARNING: DEPRECATED (DO NOT USE)
+// #define CURU                                                                    \
+   (ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_CURRENCY_UNIT)) // WARNING: DEPRECATED (DO NOT USE)
 
 // Keypad ( (Left Parenthesis)
 // #define KP_LEFT_PARENTHESIS (ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_KEYPAD_LEFT_PARENTHESIS))
@@ -944,8 +902,8 @@
 // #define KP_RPAR (KP_RIGHT_PARENTHESIS)
 
 // Keypad Space
-// #define KSPC                                                                                       \
-    (ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_KEYPAD_SPACE)) // WARNING: DEPRECATED (DO NOT USE)
+// #define KSPC                                                                    \
+   (ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_KEYPAD_SPACE)) // WARNING: DEPRECATED (DO NOT USE)
 
 // Keypad Clear
 // #define KP_CLEAR (ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_KEYPAD_CLEAR))
@@ -1144,35 +1102,35 @@
 // #define C_ASPECT (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_ASPECT))
 
 // Consumer Display Brightness Increment
-// #define C_BRIGHTNESS_INC                                                                           \
-    (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_DISPLAY_BRIGHTNESS_INCREMENT))
+// #define C_BRIGHTNESS_INC                                                           \
+   (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_DISPLAY_BRIGHTNESS_INCREMENT))
 // #define C_BRI_INC (C_BRIGHTNESS_INC)
 // #define C_BRI_UP (C_BRIGHTNESS_INC)
 
 // Consumer Display Brightness Decrement
-// #define C_BRIGHTNESS_DEC                                                                           \
-    (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_DISPLAY_BRIGHTNESS_DECREMENT))
+// #define C_BRIGHTNESS_DEC                                                           \
+   (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_DISPLAY_BRIGHTNESS_DECREMENT))
 // #define C_BRI_DEC (C_BRIGHTNESS_DEC)
 // #define C_BRI_DN (C_BRIGHTNESS_DEC)
 
 // Consumer Display Backlight Toggle
-// #define C_BACKLIGHT_TOGGLE                                                                         \
-    (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_DISPLAY_BACKLIGHT_TOGGLE))
+// #define C_BACKLIGHT_TOGGLE                                                      \
+   (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_DISPLAY_BACKLIGHT_TOGGLE))
 // #define C_BKLT_TOG (C_BACKLIGHT_TOGGLE)
 
 // Consumer Display Set Brightness to Minimum
-// #define C_BRIGHTNESS_MINIMUM                                                                       \
-    (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_DISPLAY_SET_BRIGHTNESS_TO_MINIMUM))
+// #define C_BRIGHTNESS_MINIMUM                                                       \
+   (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_DISPLAY_SET_BRIGHTNESS_TO_MINIMUM))
 // #define C_BRI_MIN (C_BRIGHTNESS_MINIMUM)
 
 // Consumer Display Set Brightness to Maximum
-// #define C_BRIGHTNESS_MAXIMUM                                                                       \
-    (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_DISPLAY_SET_BRIGHTNESS_TO_MAXIMUM))
+// #define C_BRIGHTNESS_MAXIMUM                                                       \
+   (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_DISPLAY_SET_BRIGHTNESS_TO_MAXIMUM))
 // #define C_BRI_MAX (C_BRIGHTNESS_MAXIMUM)
 
 // Consumer Display Set Auto Brightness
-// #define C_BRIGHTNESS_AUTO                                                                          \
-    (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_DISPLAY_SET_AUTO_BRIGHTNESS))
+// #define C_BRIGHTNESS_AUTO                                                       \
+   (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_DISPLAY_SET_AUTO_BRIGHTNESS))
 // #define C_BRI_AUTO (C_BRIGHTNESS_AUTO)
 
 // Consumer Mode Step
@@ -1184,8 +1142,8 @@
 // #define C_CHAN_LAST (C_RECALL_LAST)
 
 // Consumer Media Select Computer
-// #define C_MEDIA_COMPUTER                                                                           \
-    (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_MEDIA_SELECT_COMPUTER))
+// #define C_MEDIA_COMPUTER                                                           \
+   (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_MEDIA_SELECT_COMPUTER))
 
 // Consumer Media Select TV
 // #define C_MEDIA_TV (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_MEDIA_SELECT_TV))
@@ -1200,19 +1158,19 @@
 // #define C_MEDIA_PHONE (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_MEDIA_SELECT_TELEPHONE))
 
 // Consumer Media Select Program Guide
-// #define C_MEDIA_GUIDE                                                                              \
-    (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_MEDIA_SELECT_PROGRAM_GUIDE))
+// #define C_MEDIA_GUIDE                                                           \
+   (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_MEDIA_SELECT_PROGRAM_GUIDE))
 
 // Consumer Media Select Video Phone
-// #define C_MEDIA_VIDEOPHONE                                                                         \
-    (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_MEDIA_SELECT_VIDEO_PHONE))
+// #define C_MEDIA_VIDEOPHONE                                                      \
+   (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_MEDIA_SELECT_VIDEO_PHONE))
 
 // Consumer Media Select Games
 // #define C_MEDIA_GAMES (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_MEDIA_SELECT_GAMES))
 
 // Consumer Media Select Messages
-// #define C_MEDIA_MESSAGES                                                                           \
-    (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_MEDIA_SELECT_MESSAGES))
+// #define C_MEDIA_MESSAGES                                                           \
+   (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_MEDIA_SELECT_MESSAGES))
 
 // Consumer Media Select CD
 // #define C_MEDIA_CD (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_MEDIA_SELECT_CD))
@@ -1236,8 +1194,8 @@
 // #define C_MEDIA_CABLE (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_MEDIA_SELECT_CABLE))
 
 // Consumer Media Select Satellite
-// #define C_MEDIA_SATELLITE                                                                          \
-    (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_MEDIA_SELECT_SATELLITE))
+// #define C_MEDIA_SATELLITE                                                       \
+   (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_MEDIA_SELECT_SATELLITE))
 
 // Consumer Media Select Home
 // #define C_MEDIA_HOME (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_MEDIA_SELECT_HOME))
@@ -1331,13 +1289,13 @@
 // #define C_SLOW (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_SLOW))
 
 // Consumer Alternate Audio Increment
-// #define C_ALTERNATE_AUDIO_INCREMENT                                                                \
-    (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_ALTERNATE_AUDIO_INCREMENT))
+// #define C_ALTERNATE_AUDIO_INCREMENT                                                \
+   (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_ALTERNATE_AUDIO_INCREMENT))
 // #define C_ALT_AUDIO_INC (C_ALTERNATE_AUDIO_INCREMENT)
 
 // Consumer AL Consumer Control Configuration
-// #define C_AL_CCC                                                                                   \
-    (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AL_CONSUMER_CONTROL_CONFIGURATION))
+// #define C_AL_CCC                                                                \
+   (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AL_CONSUMER_CONTROL_CONFIGURATION))
 
 // Consumer AL Word Processor
 // #define C_AL_WORD (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AL_WORD_PROCESSOR))
@@ -1350,12 +1308,12 @@
 // #define C_AL_SHEET (C_AL_SPREADSHEET)
 
 // Consumer AL Graphics Editor
-// #define C_AL_GRAPHICS_EDITOR                                                                       \
-    (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AL_GRAPHICS_EDITOR))
+// #define C_AL_GRAPHICS_EDITOR                                                       \
+   (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AL_GRAPHICS_EDITOR))
 
 // Consumer AL Presentation App
-// #define C_AL_PRESENTATION                                                                          \
-    (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AL_PRESENTATION_APP))
+// #define C_AL_PRESENTATION                                                       \
+   (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AL_PRESENTATION_APP))
 
 // Consumer AL Database App
 // #define C_AL_DATABASE (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AL_DATABASE_APP))
@@ -1372,8 +1330,8 @@
 // #define C_AL_VOICEMAIL (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AL_VOICEMAIL))
 
 // Consumer AL Contacts/Address Book
-// #define C_AL_CONTACTS                                                                              \
-    (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AL_CONTACTS_ADDRESS_BOOK))
+// #define C_AL_CONTACTS                                                           \
+   (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AL_CONTACTS_ADDRESS_BOOK))
 // #define C_AL_ADDRESS_BOOK (C_AL_CONTACTS)
 
 // Consumer AL Calendar/Schedule
@@ -1381,8 +1339,8 @@
 // #define C_AL_CAL (C_AL_CALENDAR)
 
 // Consumer AL Task/Project Manager
-// #define C_AL_TASK_MANAGER                                                                          \
-    (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AL_TASK_PROJECT_MANAGER))
+// #define C_AL_TASK_MANAGER                                                       \
+   (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AL_TASK_PROJECT_MANAGER))
 
 // Consumer AL Log/Journal/Timecard
 // #define C_AL_JOURNAL (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AL_LOG_JOURNAL_TIMECARD))
@@ -1395,12 +1353,12 @@
 // #define C_AL_CALC (C_AL_CALCULATOR)
 
 // Consumer AL A/V Capture/Playback
-// #define C_AL_AV_CAPTURE_PLAYBACK                                                                   \
-    (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AL_A_V_CAPTURE_PLAYBACK))
+// #define C_AL_AV_CAPTURE_PLAYBACK                                                   \
+   (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AL_A_V_CAPTURE_PLAYBACK))
 
 // Consumer AL Local Machine Browser
-// #define C_AL_MY_COMPUTER                                                                           \
-    (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AL_LOCAL_MACHINE_BROWSER))
+// #define C_AL_MY_COMPUTER                                                           \
+   (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AL_LOCAL_MACHINE_BROWSER))
 
 // Consumer AL Internet Browser
 // #define C_AL_WWW (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AL_INTERNET_BROWSER))
@@ -1413,8 +1371,8 @@
 // #define C_AL_LOGOFF (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AL_LOGOFF))
 
 // Consumer AL Terminal Lock/Screensaver
-// #define C_AL_LOCK                                                                                  \
-    (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AL_TERMINAL_LOCK_SCREENSAVER))
+// #define C_AL_LOCK                                                            \
+   (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AL_TERMINAL_LOCK_SCREENSAVER))
 // #define C_AL_SCREENSAVER (C_AL_LOCK)
 // #define C_AL_COFFEE (C_AL_LOCK)
 
@@ -1422,16 +1380,16 @@
 // #define C_AL_CONTROL_PANEL (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AL_CONTROL_PANEL))
 
 // Consumer AL Select Task/Application
-// #define C_AL_SELECT_TASK                                                                           \
-    (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AL_SELECT_TASK_APPLICATION))
+// #define C_AL_SELECT_TASK                                                           \
+   (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AL_SELECT_TASK_APPLICATION))
 
 // Consumer AL Next Task/Application
-// #define C_AL_NEXT_TASK                                                                             \
-    (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AL_NEXT_TASK_APPLICATION))
+// #define C_AL_NEXT_TASK                                                          \
+   (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AL_NEXT_TASK_APPLICATION))
 
 // Consumer AL Previous Task/Application
-// #define C_AL_PREVIOUS_TASK                                                                         \
-    (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AL_PREVIOUS_TASK_APPLICATION))
+// #define C_AL_PREVIOUS_TASK                                                      \
+   (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AL_PREVIOUS_TASK_APPLICATION))
 // #define C_AL_PREV_TASK (C_AL_PREVIOUS_TASK)
 
 // Consumer AL Integrated Help Center
@@ -1446,8 +1404,8 @@
 // #define C_AL_SPELL (C_AL_SPELLCHECK)
 
 // Consumer AL Keyboard Layout
-// #define C_AL_KEYBOARD_LAYOUT                                                                       \
-    (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AL_KEYBOARD_LAYOUT))
+// #define C_AL_KEYBOARD_LAYOUT                                                       \
+   (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AL_KEYBOARD_LAYOUT))
 
 // Consumer AL Screen Saver
 // #define C_AL_SCREEN_SAVER (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AL_SCREEN_SAVER))
@@ -1470,13 +1428,13 @@
 // #define C_AL_MOVIES (C_AL_MOVIE_BROWSER)
 
 // Consumer AL Instant Messaging
-// #define C_AL_INSTANT_MESSAGING                                                                     \
-    (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AL_INSTANT_MESSAGING))
+// #define C_AL_INSTANT_MESSAGING                                                     \
+   (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AL_INSTANT_MESSAGING))
 // #define C_AL_IM (C_AL_INSTANT_MESSAGING)
 
 // Consumer AL OEM Features/Tips/Tutorial Browser
-// #define C_AL_OEM_FEATURES                                                                          \
-    (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AL_OEM_FEATURES_TIPS_TUTORIAL_BROWSER))
+// #define C_AL_OEM_FEATURES                                                       \
+   (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AL_OEM_FEATURES_TIPS_TUTORIAL_BROWSER))
 // #define C_AL_TIPS (C_AL_OEM_FEATURES)
 // #define C_AL_TUTORIAL (C_AL_OEM_FEATURES)
 
@@ -1587,41 +1545,41 @@
 // #define C_AC_SEND (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AC_SEND))
 
 // Consumer AC Desktop Show All Windows
-// #define C_AC_DESKTOP_SHOW_ALL_WINDOWS                                                              \
-    (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AC_DESKTOP_SHOW_ALL_WINDOWS))
+// #define C_AC_DESKTOP_SHOW_ALL_WINDOWS                                              \
+   (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AC_DESKTOP_SHOW_ALL_WINDOWS))
 
 // Consumer AC Desktop Show All Applications
-// #define C_AC_DESKTOP_SHOW_ALL_APPLICATIONS                                                         \
-    (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AC_DESKTOP_SHOW_ALL_APPLICATIONS))
+// #define C_AC_DESKTOP_SHOW_ALL_APPLICATIONS                                            \
+   (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_AC_DESKTOP_SHOW_ALL_APPLICATIONS))
 
 // Consumer Keyboard Input Assist Previous
-// #define C_KEYBOARD_INPUT_ASSIST_PREVIOUS                                                           \
-    (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_KEYBOARD_INPUT_ASSIST_PREVIOUS))
+// #define C_KEYBOARD_INPUT_ASSIST_PREVIOUS                                              \
+   (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_KEYBOARD_INPUT_ASSIST_PREVIOUS))
 // #define C_KBIA_PREV (C_KEYBOARD_INPUT_ASSIST_PREVIOUS)
 
 // Consumer Keyboard Input Assist Next
-// #define C_KEYBOARD_INPUT_ASSIST_NEXT                                                               \
-    (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_KEYBOARD_INPUT_ASSIST_NEXT))
+// #define C_KEYBOARD_INPUT_ASSIST_NEXT                                                  \
+   (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_KEYBOARD_INPUT_ASSIST_NEXT))
 // #define C_KBIA_NEXT (C_KEYBOARD_INPUT_ASSIST_NEXT)
 
 // Consumer Keyboard Input Assist Previous Group
-// #define C_KEYBOARD_INPUT_ASSIST_PREVIOUS_GROUP                                                     \
-    (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_KEYBOARD_INPUT_ASSIST_PREVIOUS_GROUP))
+// #define C_KEYBOARD_INPUT_ASSIST_PREVIOUS_GROUP                                        \
+   (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_KEYBOARD_INPUT_ASSIST_PREVIOUS_GROUP))
 // #define C_KBIA_PREV_GRP (C_KEYBOARD_INPUT_ASSIST_PREVIOUS_GROUP)
 
 // Consumer Keyboard Input Assist Next Group
-// #define C_KEYBOARD_INPUT_ASSIST_NEXT_GROUP                                                         \
-    (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_KEYBOARD_INPUT_ASSIST_NEXT_GROUP))
+// #define C_KEYBOARD_INPUT_ASSIST_NEXT_GROUP                                            \
+   (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_KEYBOARD_INPUT_ASSIST_NEXT_GROUP))
 // #define C_KBIA_NEXT_GRP (C_KEYBOARD_INPUT_ASSIST_NEXT_GROUP)
 
 // Consumer Keyboard Input Assist Accept
-// #define C_KEYBOARD_INPUT_ASSIST_ACCEPT                                                             \
-    (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_KEYBOARD_INPUT_ASSIST_ACCEPT))
+// #define C_KEYBOARD_INPUT_ASSIST_ACCEPT                                             \
+   (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_KEYBOARD_INPUT_ASSIST_ACCEPT))
 // #define C_KBIA_ACCEPT (C_KEYBOARD_INPUT_ASSIST_ACCEPT)
 
 // Consumer Keyboard Input Assist Cancel
-// #define C_KEYBOARD_INPUT_ASSIST_CANCEL                                                             \
-    (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_KEYBOARD_INPUT_ASSIST_CANCEL))
+// #define C_KEYBOARD_INPUT_ASSIST_CANCEL                                             \
+   (ZMK_HID_USAGE(HID_USAGE_CONSUMER, HID_USAGE_CONSUMER_KEYBOARD_INPUT_ASSIST_CANCEL))
 // #define C_KBIA_CANCEL (C_KEYBOARD_INPUT_ASSIST_CANCEL)
 
 // Apple Globe key
