@@ -112,41 +112,41 @@ layer_name { \
          &kp N,           &lt LSYM M,     &kp COMMA,      &kp DOT,       &ctrlslhdlr,    &mt LSHIFT BSLH,
          &kp SPACE,       &ctrlentbspc,   &kp RALT )
 
-      right( terminal,
-         &none            &none           &kp AMPS        &kp PIPE       &none           &kp BSPC
-         &kp TILDE        &kp MINUS       &kp EXCL        &none          &kp STAR        &none
-         &none            &none           &none           &none          &none           &none
-         &trans           &trans          &trans )
+      /* right( terminal, */
+      /*    &none            &none           &kp AMPS        &kp PIPE       &none           &kp BSPC */
+      /*    &kp TILDE        &kp MINUS       &kp EXCL        &none          &kp STAR        &none */
+      /*    &none            &none           &none           &none          &none           &none */
+      /*    &trans           &trans          &trans ) */
 
-      right( code1,
-         &none            &none           &kp LPAR        &kp RPAR       &kp CARET       &kp BSPC
-         &kp PLUS         &kp UNDER       &kp LBRC        &kp RBRC       &kp STAR        &none
-         &kp MINUS        &kp EQUAL       &kp LBKT        &kp RBKT       &kp DOLLAR      &zed_em_kay
-         &trans           &trans          &trans )
+      /* right( code1, */
+      /*    &none            &none           &kp LPAR        &kp RPAR       &kp CARET       &kp BSPC */
+      /*    &kp PLUS         &kp UNDER       &kp LBRC        &kp RBRC       &kp STAR        &none */
+      /*    &kp MINUS        &kp EQUAL       &kp LBKT        &kp RBKT       &kp DOLLAR      &zed_em_kay */
+      /*    &trans           &trans          &trans ) */
 
-      right( code2,
-         &none            &none           &kp AMPS        &kp PIPE       &none           &kp BSPC
-         &none            &kp AT          &kp EXCL        &kp PLUS       &kp STAR        &kp PRCNT
-         &none            &none           &kp HASH        &kp MINUS      &kp PLUS        &none
-         &trans           &trans          &trans )
+      /* right( code2, */
+      /*    &none            &none           &kp AMPS        &kp PIPE       &none           &kp BSPC */
+      /*    &none            &kp AT          &kp EXCL        &kp PLUS       &kp STAR        &kp PRCNT */
+      /*    &none            &none           &kp HASH        &kp MINUS      &kp PLUS        &none */
+      /*    &trans           &trans          &trans ) */
 
-      right( numpad,
-         &none            &kp N7          &kp N8          &kp N9         &kp EQUAL       &kp BSPC
-         &kp PLUS         &kp N4          &kp N5          &kp N6         &kp STAR        &none
-         &kp MINUS        &kp N1          &kp N2          &kp N3         &kp FSLH        &kp RET
-         &kp N0           &kp DOT         &trans )
+      /* right( numpad, */
+      /*    &none            &kp N7          &kp N8          &kp N9         &kp EQUAL       &kp BSPC */
+      /*    &kp PLUS         &kp N4          &kp N5          &kp N6         &kp STAR        &none */
+      /*    &kp MINUS        &kp N1          &kp N2          &kp N3         &kp FSLH        &kp RET */
+      /*    &kp N0           &kp DOT         &trans ) */
 
-      hands( arrows,
-         &none            &none           &none           &none          &none           &kp BSPC
-         &none            &kp N7          &kp N8          &kp N9         &kp EQUAL       &none
-         &none            &none           &none           &none          &none           &none
-         &trans           &trans          &trans )
+      /* hands( arrows, */
+      /*    &none            &none           &none           &none          &none           &kp BSPC */
+      /*    &none            &kp N7          &kp N8          &kp N9         &kp EQUAL       &none */
+      /*    &none            &none           &none           &none          &none           &none */
+      /*    &trans           &trans          &trans ) */
 
-      hands( controls,
-         &none            &kp C_BRI_UP    &kp C_MUTE      &kp C_VOL_DN   &kp C_VOL_UP    &none
-         &none            &kp C_BRI_DN    &kp C_PREV      &kp C_PP       &kp C_NEXT      &none
-         &none            &none           &none           &none          &none           &none
-         &trans           &trans          &trans )
+      /* hands( controls, */
+      /*    &none            &kp C_BRI_UP    &kp C_MUTE      &kp C_VOL_DN   &kp C_VOL_UP    &none */
+      /*    &none            &kp C_BRI_DN    &kp C_PREV      &kp C_PP       &kp C_NEXT      &none */
+      /*    &none            &none           &none           &none          &none           &none */
+      /*    &trans           &trans          &trans ) */
    };
 };
 
