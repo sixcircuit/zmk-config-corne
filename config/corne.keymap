@@ -101,16 +101,17 @@ layer_name { \
    keymap {
       compatible = "zmk,keymap";
 
-      /* hands( base_layer, */
-      /*    &kp TAB,         &lt CTRLS Q,    &kp W,          &kp E,         &kp R,          &kp T, */
-      /*    &mt LCTRL ESC,   &lt NUMPAD A,   &lt TERMS S,    &lt CODE1 D,   &lt CODE2 F,    &kp G, */
-      /*    &none,           &kp Z,          &kp X,          &kp C,         &lt ARROWS V,   &kp B, */
-      /*    &kp LGUI,        &kp LSHIFT,     &kp SPACE, */
+      hands( base_layer,
+         &kp TAB,         &lt CTRLS Q,    &kp W,          &kp E,         &kp R,          &kp T,
+         &mt LCTRL ESC,   &lt NUMPAD A,   &lt TERMS S,    &lt CODE1 D,   &lt CODE2 F,    &kp G,
+         &none,           &kp Z,          &kp X,          &kp C,         &lt ARROWS V,   &kp B,
+         &kp LGUI,        &kp LSHIFT,     &kp SPACE,
 
-      /*    &kp Y,           &kp U,          &kp I,          &kp O,         &kp P,          &kp BSPC, */
-      /*    &kp H,           &kp J,          &kp K,          &kp L,         &kp SEMI,       &ctrlqtgrv, */
-      /*    &kp N,           &lt LSYM M,     &kp COMMA,      &kp DOT,       &ctrlslhdlr,    &mt LSHIFT BSLH, */
-      /*    &kp SPACE,       &ctrlentbspc,   &kp RALT ) */
+         &kp Y,           &kp U,          &kp I,          &kp O,         &kp P,          &kp BSPC,
+         &kp H,           &kp J,          &kp K,          &kp L,         &kp SEMI,       &ctrlqtgrv,
+         &none,            &none,           &none,           &none,          &none,           &none,
+         /* &kp N,           &lt LSYM M,     &kp COMMA,      &kp DOT,       &ctrlslhdlr,    &mt LSHIFT BSLH, */
+         &kp SPACE,       &ctrlentbspc,   &kp RALT )
 
       right( terminal,
          &none,            &none,           &kp AMPS,        &kp PIPE,       &none,           &kp BSPC,
