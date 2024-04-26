@@ -138,7 +138,7 @@ layer_name { \
 
       right( arrows,
          &none,           &none,           &none,           &none,          &none,           &kp BSPC,
-         &none,           &kp LEFT,        &kp DOWN,        &kp UP,         &kp RIGHT,       &none,
+         &kp LEFT,        &kp DOWN,        &kp UP,         &kp RIGHT,       &none,           &none,
          &none,           &none,           &none,           &none,          &none,           &none,
          &trans,          &trans,          &trans )
 
