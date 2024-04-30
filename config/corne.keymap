@@ -17,12 +17,15 @@
          mods = <(MOD_LCTL)>;
       };
 
-      ctrldlt: ctrl_d_lt {
-         compatible = "zmk,behavior-mod-morph";
-         #binding-cells = <0>;
-         bindings = <&lt CODE2 D>, <&kp D>;
-         mods = <(MOD_LCTL)>;
-      };
+      // maybe do this to be able to repeat ctrl d but right now i don't care enough.
+      // the naive version here doesn't work but it seems like reddit has a solution
+      // https://www.reddit.com/r/zmk/comments/12ujlmb/combing_modmorph_and_layer_tap/
+      // ctrldlt: ctrl_d_lt {
+      //    compatible = "zmk,behavior-mod-morph";
+      //    #binding-cells = <0>;
+      //    bindings = <&lt CODE2 D>, <&kp GRAVE>;
+      //    mods = <(MOD_LCTL)>;
+      // };
 
       ctrlslhdlr: ctrl_fslash_dollar {
          compatible = "zmk,behavior-mod-morph";
@@ -110,7 +113,7 @@ layer_name { \
 
       hands( base_layer,
          &kp TAB,         &lt CTRLS Q,    &kp W,          &kp E,         &kp R,          &kp T,
-         &mt LCTRL ESC,   &lt NUMPAD A,   &lt TERMS S,    &ctrldlt,      &lt CODE1 F,    &kp G,
+         &mt LCTRL ESC,   &lt NUMPAD A,   &lt TERMS S,    &lt CODE2 D,   &lt CODE1 F,    &kp G,
          &kp LSHIFT,      &kp Z,          &kp X,          &kp C,         &lt ARROWS V,   &kp B,
          &kp LGUI,        &kp LALT,       &kp SPACE,
 
