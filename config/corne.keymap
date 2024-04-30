@@ -17,6 +17,13 @@
          mods = <(MOD_LCTL)>;
       };
 
+      ctrldlt: ctrl_quote_grave {
+         compatible = "zmk,behavior-mod-morph";
+         #binding-cells = <0>;
+         bindings = <&lt CODE2 D>, <&kp D>;
+         mods = <(MOD_LCTL)>;
+      };
+
       ctrlslhdlr: ctrl_fslash_dollar {
          compatible = "zmk,behavior-mod-morph";
          #binding-cells = <0>;
@@ -103,14 +110,14 @@ layer_name { \
 
       hands( base_layer,
          &kp TAB,         &lt CTRLS Q,    &kp W,          &kp E,         &kp R,          &kp T,
-         &mt LCTRL ESC,   &lt NUMPAD A,   &lt TERMS S,    &lt CODE1 D,   &lt CODE2 F,    &kp G,
+         &mt LCTRL ESC,   &lt NUMPAD A,   &lt TERMS S,    &ctrldlt,      &lt CODE1 F,    &kp G,
          &kp LSHIFT,      &kp Z,          &kp X,          &kp C,         &lt ARROWS V,   &kp B,
-         &kp LGUI,        &none,          &kp SPACE,
+         &kp LGUI,        &kp LALT,       &kp SPACE,
 
          &kp Y,           &kp U,          &kp I,          &kp O,         &kp P,          &kp BSPC,
          &kp H,           &kp J,          &kp K,          &kp L,         &kp SEMI,       &ctrlqtgrv,
          &kp N,           &kp M,          &kp COMMA,      &kp DOT,       &ctrlslhdlr,    &mt RSHIFT BSLH,
-         &kp SPACE,       &ctrlentbspc,   &kp RALT )
+         &kp SPACE,       &ctrlentbspc,   &kp RGUI )
 
       right( terminal,
          &none,            &none,           &kp AMPS,        &kp PIPE,       &none,           &kp BSPC,
