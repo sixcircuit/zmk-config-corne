@@ -124,7 +124,7 @@ layer_name { \
 
       right( terminal,
          &none,            &none,           &kp AMPS,        &kp PIPE,       &none,           &kp BSPC,
-         &kp TILDE,        &kp MINUS,       &kp EXCL,        &none,          &kp STAR,        &none,
+         &kp TILDE,        &kp MINUS,       &kp EXCL,        &kp PRCNT,      &kp STAR,        &none,
          &none,            &none,           &none,           &none,          &none,           &none,
          &trans,           &trans,          &trans )
 
@@ -136,7 +136,7 @@ layer_name { \
 
       right( code2,
          &none,            &none,           &kp AMPS,        &kp PIPE,       &none,           &kp BSPC,
-         &none,            &kp AT,          &kp EXCL,        &kp PLUS,       &kp STAR,        &kp PRCNT,
+         &none,            &kp AT,          &kp EXCL,        &kp PLUS,       &kp STAR,        &none,
          &none,            &none,           &kp HASH,        &kp MINUS,      &kp PLUS,        &none,
          &trans,           &trans,          &trans )
 
