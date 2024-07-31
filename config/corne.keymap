@@ -125,7 +125,7 @@ layer_name { \
       right( terminal,
          &none,            &kp PLUS,        &kp AMPS,        &kp PIPE,       &none,           &kp BSPC,
          &kp TILDE,        &kp MINUS,       &kp EXCL,        &kp PRCNT,      &kp STAR,        &none,
-         &none,            &kp AT,          &kp HASH,        &none,          &none,           &none,
+         &none,            &kp EQUAL,       &kp AT,          &kp HASH,       &none,           &none,
          &trans,           &trans,          &trans )
 
       right( code1,
@@ -137,7 +137,7 @@ layer_name { \
       right( code2,
          &none,            &kp PLUS,        &kp AMPS,        &kp PIPE,       &none,           &kp BSPC,
          &none,            &kp MINUS,       &kp EXCL,        &kp PRCNT,      &kp STAR,        &none,
-         &none,            &kp AT,          &kp HASH,        &none,          &kp FSLH,        &none,
+         &none,            &kp EQUAL,       &kp AT,          &kp HASH,       &kp FSLH,        &none,
          &trans,           &trans,          &trans )
 
       right( numpad,
