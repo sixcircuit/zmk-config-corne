@@ -47,9 +47,22 @@
 #define TERMS 1
 #define CODE1 2
 #define CODE2 3
-#define NUMPAD 4
-#define ARROWS 5
-#define CTRLS 6
+#define CODE3 4
+#define NUMPAD 5
+#define ARROWS 6
+#define CTRLS 7
+
+#define STRINGIFY(x) #x
+#define EXPAND_AND_STRINGIFY(x) STRINGIFY(x)
+#define MACRO(NAME, BINDINGS) \
+mcr_##NAME: mcr_##NAME { \
+   label = EXPAND_AND_STRINGIFY(mcr_##NAME); \
+   compatible = "zmk,behavior-macro"; \
+   #binding-cells = <0>; \
+   wait-ms = <20>; \
+   tap-ms = <10>; \
+   bindings = <BINDINGS>; \
+};
 
 // setup hand mapping define and fix up symbol tables
 
@@ -95,24 +108,25 @@ layer_name { \
    >; \
 };
 
+
 / {
    macros {
-      zed_em_kay: zed_em_kay {
-         compatible = "zmk,behavior-macro";
-         #binding-cells = <0>;
-         bindings
-            = <&macro_press &kp LSHFT>
-            , <&macro_tap &kp Z &kp M &kp K>
-            , <&macro_release &kp LSHFT>
-            ;
-      };
+      MACRO(zmk, &macro_press &kp LSHFT &macro_tap &kp Z &kp M &kp K &macro_release &kp LSHFT)
+      //MACRO(zmk, )
+//      zed_em_kay: zed_em_kay {
+ //        compatible = "zmk,behavior-macro";
+  //       #binding-cells = <0>;
+   //      bindings
+    //        = <&macro_press &kp LSHFT> , <&macro_tap &kp Z &kp M &kp K> , <&macro_release &kp LSHFT>
+     //       ;
+      //};
    };
 
    keymap {
       compatible = "zmk,keymap";
 
       hands( base_layer,
-         &kp TAB,         &lt CTRLS Q,    &kp W,          &kp E,         &kp R,          &kp T,
+         &kp TAB,         &lt CTRLS Q,    &kp W,          &lt CODE3 E,         &kp R,          &kp T,
          &mt LCTRL ESC,   &lt NUMPAD A,   &lt TERMS S,    &lt CODE2 D,   &lt CODE1 F,    &kp G,
          &kp LSHIFT,      &kp Z,          &kp X,          &kp C,         &lt ARROWS V,   &kp B,
          &kp LGUI,        &kp LALT,       &kp SPACE,
@@ -131,10 +145,16 @@ layer_name { \
       right( code1,
          &none,            &none,           &kp LPAR,        &kp RPAR,       &kp CARET,       &kp BSPC,
          &kp PLUS,         &kp UNDER,       &kp LBRC,        &kp RBRC,       &kp STAR,        &none,
-         &kp MINUS,        &kp EQUAL,       &kp LBKT,        &kp RBKT,       &kp DOLLAR,      &zed_em_kay,
+         &kp MINUS,        &kp EQUAL,       &kp LBKT,        &kp RBKT,       &kp DOLLAR,      &mcr_zmk,
          &trans,           &trans,          &trans )
 
       right( code2,
+         &none,            &kp PLUS,        &kp AMPS,        &kp PIPE,       &none,           &kp BSPC,
+         &none,            &kp MINUS,       &kp EXCL,        &kp PRCNT,      &kp STAR,        &none,
+         &none,            &kp EQUAL,       &kp AT,          &kp HASH,       &kp FSLH,        &none,
+         &trans,           &trans,          &trans )
+
+      right( code3,
          &none,            &kp PLUS,        &kp AMPS,        &kp PIPE,       &none,           &kp BSPC,
          &none,            &kp MINUS,       &kp EXCL,        &kp PRCNT,      &kp STAR,        &none,
          &none,            &kp EQUAL,       &kp AT,          &kp HASH,       &kp FSLH,        &none,
