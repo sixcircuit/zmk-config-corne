@@ -84,7 +84,7 @@ mcr_##NAME: mcr_##NAME { \
    rth1, rth2, rth3 \
 ) \
 layer_name { \
-   display-name = "layer_name";
+   display-name = "layer_name"; \
    bindings = < \
       lt1 lt2 lt3 lt4 lt5 lt6 \
       rt1 rt2 rt3 rt4 rt5 rt6 \
@@ -104,7 +104,7 @@ layer_name { \
    rth1, rth2, rth3 \
 ) \
 layer_name { \
-   display-name = "layer_name";
+   display-name = "layer_name"; \
    bindings = < \
       &trans           &trans          &trans          &trans          &trans           &trans \
       rt1 rt2 rt3 rt4 rt5 rt6 \
@@ -124,7 +124,7 @@ layer_name { \
    lth1, lth2, lth3 \
 ) \
 layer_name { \
-   display-name = "layer_name";
+   display-name = "layer_name"; \
    bindings = < \
       lt1 lt2 lt3 lt4 lt5 lt6 \
       &trans           &trans          &trans          &trans          &trans           &trans \
