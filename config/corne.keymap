@@ -182,7 +182,7 @@ layer_name { \
       right( code_1,
          &none,            &none,           &kp LPAR,        &kp RPAR,       &kp CARET,       &kp BSPC,
          &kp PLUS,         &kp UNDER,       &kp LBRC,        &kp RBRC,       &kp STAR,        &none,
-         &kp MINUS,        &kp EQUAL,       &kp LBKT,        &kp RBKT,       &kp DOLLAR,      &zed_em_kay,
+         &kp MINUS,        &kp EQUAL,       &kp LBKT,        &kp RBKT,       &kp DOLLAR,      &mcr_zmk,
          &trans,           &trans,          &trans
       )
 
