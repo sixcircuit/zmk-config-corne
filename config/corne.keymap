@@ -113,12 +113,10 @@ layer_name { \
    macros {
       MACRO(zmk, &macro_press &kp LSHFT &macro_tap &kp Z &kp M &kp K &macro_release &kp LSHFT)
       //MACRO(zmk, )
-//      zed_em_kay: zed_em_kay {
- //        compatible = "zmk,behavior-macro";
-  //       #binding-cells = <0>;
-   //      bindings
-    //        = <&macro_press &kp LSHFT> , <&macro_tap &kp Z &kp M &kp K> , <&macro_release &kp LSHFT>
-     //       ;
+      //zed_em_kay: zed_em_kay {
+      //   compatible = "zmk,behavior-macro";
+      //   #binding-cells = <0>;
+      //   bindings = <&macro_press &kp LSHFT> , <&macro_tap &kp Z &kp M &kp K> , <&macro_release &kp LSHFT>;
       //};
    };
 
@@ -134,7 +132,9 @@ layer_name { \
          &kp Y,           &kp U,          &kp I,          &kp O,         &kp P,          &kp BSPC,
          &kp H,           &kp J,          &kp K,          &kp L,         &kp SEMI,       &ctrlqtgrv,
          &kp N,           &kp M,          &kp COMMA,      &kp DOT,       &ctrlslhdlr,    &mt RSHIFT BSLH,
-         &kp SPACE,       &ctrlentbspc,   &kp RGUI )
+         &none,           &none,          &none)
+      // &kp SPACE,       &none,          &none)
+      // &kp SPACE,       &ctrlentbspc,   &kp RGUI )
 
       right( terminal,
          &none,            &kp PLUS,        &kp AMPS,        &kp PIPE,       &none,           &kp BSPC,
@@ -145,7 +145,7 @@ layer_name { \
       right( code1,
          &none,            &none,           &kp LPAR,        &kp RPAR,       &kp CARET,       &kp BSPC,
          &kp PLUS,         &kp UNDER,       &kp LBRC,        &kp RBRC,       &kp STAR,        &none,
-         &kp MINUS,        &kp EQUAL,       &kp LBKT,        &kp RBKT,       &kp DOLLAR,      &mcr_zmk,
+         &kp MINUS,        &kp EQUAL,       &kp LBKT,        &kp RBKT,       &kp DOLLAR,      &zed_em_kay,
          &trans,           &trans,          &trans )
 
       right( code2,
@@ -162,7 +162,7 @@ layer_name { \
 
       right( numpad,
          &kp DOLLAR,      &kp N7,          &kp N8,          &kp N9,         &kp EQUAL,       &kp BSPC,
-         &kp PLUS,        &kp N4,          &kp N5,          &kp N6,         &kp STAR,        &kp PRCNT,
+         &kp PLUS,        &kp N4,          &kp N5,          &kp N6,         &ctrlentbspc,    &kp PRCNT,
          &kp MINUS,       &kp N1,          &kp N2,          &kp N3,         &kp FSLH,        &kp DOT,
          &kp N0,          &trans,          &trans )
 
