@@ -143,13 +143,13 @@ layer_name { \
          // compatible = "zmk,behavior-mod-morph";
          // #binding-cells = <0>;
          // bindings = <&kp D>, <&lt code_2 D>;
-         // mods = <(MOD_LCTL)>;
+         // mods = <MOD_LCTL>;
       // };
       ctrl_d_lt: ctrl_d_lt {
          compatible = "zmk,behavior-mod-morph";
          #binding-cells = <0>;
          bindings = <&kp D>, <&lt code_2 D>;
-         mods = <(MOD_LCTL)>;
+         mods = <MOD_LCTL>;
       };
       sticky_cmd: sticky_cmd {
          compatible = "zmk,behavior-sticky-key";
