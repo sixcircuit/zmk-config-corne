@@ -8,64 +8,6 @@
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
 
-/ {
-   behaviors {
-      ctrlqtgrv: ctrl_quote_grave {
-         compatible = "zmk,behavior-mod-morph";
-         #binding-cells = <0>;
-         bindings = <&kp SQT>, <&kp GRAVE>;
-         mods = <(MOD_LCTL)>;
-      };
-
-      // maybe do this to be able to repeat ctrl d but right now i don't care enough.
-      // the naive version here doesn't work but it seems like reddit has a solution
-      // https://www.reddit.com/r/zmk/comments/12ujlmb/combing_modmorph_and_layer_tap/
-      // ctrldlt: ctrl_d_lt {
-      //    compatible = "zmk,behavior-mod-morph";
-      //    #binding-cells = <0>;
-      //    bindings = <&lt CODE2 D>, <&kp GRAVE>;
-      //    mods = <(MOD_LCTL)>;
-      // };
-
-      ctrlslhdlr: ctrl_fslash_dollar {
-         compatible = "zmk,behavior-mod-morph";
-         #binding-cells = <0>;
-         bindings = <&kp FSLH>, <&kp DLLR>;
-         mods = <(MOD_LCTL)>;
-      };
-
-      ctrlentbspc: ctrl_enter_backspace {
-         compatible = "zmk,behavior-mod-morph";
-         #binding-cells = <0>;
-         bindings = <&kp RET>, <&kp BSPC>;
-         mods = <(MOD_LCTL)>;
-      };
-      sticky_gui: sticky_gui {
-         label = "Sticky GUI";
-         compatible = "zmk,behavior-sticky-key";
-         bindings = <&kp LGUI>;
-         flavor = "lockable";
-         // release-after-ms = <5000>;  // Optional: auto-timeout after 5s
-      };
-   };
-};
-
-#define base    0
-#define remap_1 1
-#define term_1  2
-#define term_2  3
-#define code_1  4
-#define code_2  5
-#define symb_1  6
-#define symb_2  7
-#define os_1    8
-#define os_2    9
-#define macro_1 10
-#define macro_2 11
-#define numpad_1  12
-#define numpad_2  13
-// #define arrows_1  14
-// #define arrows_2  15
 
 #define STRINGIFY(x) #x
 #define EXPAND_AND_STRINGIFY(x) STRINGIFY(x)
@@ -145,6 +87,66 @@ layer_name { \
    >; \
 };
 
+#define base    0
+#define remap_1 1
+#define term_1  2
+#define term_2  3
+#define code_1  4
+#define code_2  5
+#define symb_1  6
+#define symb_2  7
+#define os_1    8
+#define os_2    9
+#define cmd_1   10
+#define macro_1 11
+#define macro_2 12
+#define numpad_1  13
+#define numpad_2  14
+#define macro_enter  15
+// #define arrows_1  16
+// #define arrows_2  17
+
+/ {
+   behaviors {
+      ctrlqtgrv: ctrl_quote_grave {
+         compatible = "zmk,behavior-mod-morph";
+         #binding-cells = <0>;
+         bindings = <&kp SQT>, <&kp GRAVE>;
+         mods = <(MOD_LCTL)>;
+      };
+
+      // maybe do this to be able to repeat ctrl d but right now i don't care enough.
+      // the naive version here doesn't work but it seems like reddit has a solution
+      // https://www.reddit.com/r/zmk/comments/12ujlmb/combing_modmorph_and_layer_tap/
+      // ctrldlt: ctrl_d_lt {
+      //    compatible = "zmk,behavior-mod-morph";
+      //    #binding-cells = <0>;
+      //    bindings = <&lt CODE2 D>, <&kp GRAVE>;
+      //    mods = <(MOD_LCTL)>;
+      // };
+
+      ctrlslhdlr: ctrl_fslash_dollar {
+         compatible = "zmk,behavior-mod-morph";
+         #binding-cells = <0>;
+         bindings = <&kp FSLH>, <&kp DLLR>;
+         mods = <(MOD_LCTL)>;
+      };
+
+      ctrlentbspc: ctrl_enter_backspace {
+         compatible = "zmk,behavior-mod-morph";
+         #binding-cells = <0>;
+         bindings = <&kp RET>, <&kp BSPC>;
+         mods = <(MOD_LCTL)>;
+      };
+      sticky_cmd: sticky_cmd {
+         compatible = "zmk,behavior-sticky-key";
+         bindings = <&kp LGUI>;
+         flavor = "lockable";
+         // release-after-ms = <5000>;  // Optional: auto-timeout after 5s
+      };
+   };
+};
+
 / {
    macros {
       MACRO(zmk, &macro_press &kp LSHFT &macro_tap &kp Z &kp M &kp K &macro_release &kp LSHFT)
@@ -154,15 +156,20 @@ layer_name { \
       //   #binding-cells = <0>;
       //   bindings = <&macro_press &kp LSHFT> , <&macro_tap &kp Z &kp M &kp K> , <&macro_release &kp LSHFT>;
       //};
-      MACRO(cmd_tab, &macro_press &kp LGUI &macro_tap &kp TAB &macro_release &kp LGUI)
-      MACRO(cmd_shift_tab, &macro_press &kp LGUI &kp LSHFT &macro_tap &kp TAB &macro_release &kp LGUI &kp LSHFT)
-   };
+      // MACRO(cmd_tab, &macro_press &kp LGUI &macro_tap &kp TAB &macro_release &kp LGUI)
+      MACRO(shift_tab, &macro_press &kp LSHFT &macro_tap &kp TAB &macro_release &kp LSHFT)
+      MACRO(cmd_lock_and_layer, &sticky_cmd &sticky_cmd &mo cmd_1);
+    };
+};
+
+/ {
 
    keymap {
+
       compatible = "zmk,keymap";
 
       hands( base,
-         &kp TAB,         &lt os_1 Q,     &lt os_2 W,      &lt symb_1 E,   &kp R,          &kp T,
+         &kp TAB,         &lt os_1 Q,     &lt macro_enter W,      &lt symb_1 E,   &kp R,          &kp T,
          &mt LCTRL ESC,   &lt remap_1 A,  &lt term_1 S,    &lt code_2 D,   &lt code_1 F,   &kp G,
          &sk LSHIFT,      &kp Z,          &kp X,           &kp C,          &lt numpad_1 V, &kp B,
          &kp LGUI,        &kp SPACE,      &kp LALT,
@@ -233,8 +240,15 @@ layer_name { \
 
       right( os_2,
          &none,           &none,           &none,      &none,    &none,           &none,
-         &none,           &cmd_shift_tab,  &cmd_tab,   &none,    &none,           &none,
          &none,           &none,           &none,      &none,    &none,           &none,
+         &none,           &none,           &none,      &none,    &none,           &none,
+         &trans,          &trans,          &trans
+      )
+
+      right( cmd_1,
+         &none,           &none,           &none,        &none,    &none,           &none,
+         &none,           &kp TAB,a        &shift_tab,   &none,    &none,           &none,
+         &none,           &none,           &none,        &none,    &none,           &none,
          &trans,          &trans,          &trans
       )
 
@@ -264,6 +278,13 @@ layer_name { \
          &kp PLUS,        &kp N4,          &kp N5,          &kp N6,         &trans,          &kp PRCNT,
          &kp MINUS,       &kp N1,          &kp N2,          &kp N3,         &kp FSLH,        &kp DOT,
          &kp N0,          &trans,          &trans
+      )
+
+      right( macro_enter,
+         &none,           &none,           &cmd_lock_and_layer,  &none,          &none,           &none,
+         &none,           &none,           &none,                &none,          &none,           &none,
+         &none,           &none,           &none,                &none,          &none,           &none,
+         &trans,          &trans,          &trans
       )
 
       // right( arrows_1,
