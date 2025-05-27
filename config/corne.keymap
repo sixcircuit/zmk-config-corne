@@ -55,36 +55,25 @@ layer_name { \
 
 #define base         0
 #define remap_1      1
-#define macro_enter  2
-#define term_1       3
-#define term_2       4
-#define code_1       5
-#define code_2       6
-#define symb_1       7
-#define symb_2       8
-#define os_1         9
-#define os_2         10
-#define cmd_1        11
-#define macro_1      12
-#define macro_2      13
-#define numpad_1     14
-#define numpad_2     15
-// #define arrows_1  16
-// #define arrows_2  17
+#define term_1       2
+#define term_2       3
+#define code_1       4
+#define code_2       5
+#define symb_1       6
+#define symb_2       7
+#define os_1         8
+#define os_2         9
+#define cmd_1        10
+#define macro_1      11
+#define macro_2      12
+#define numpad_1     13
+#define numpad_2     14
+// #define arrows_1  15
+// #define arrows_2  16
 
 / {
 
    behaviors {
-      kt_on: key_toggle_on_only {
-         compatible = "zmk,behavior-key-toggle";
-         #binding-cells = <1>;
-         toggle-mode = "on";
-      };
-      kt_off: key_toggle_off_only {
-         compatible = "zmk,behavior-key-toggle";
-         #binding-cells = <1>;
-         toggle-mode = "off";
-      };
       mtp: mod_tap_preferred {
          compatible = "zmk,behavior-hold-tap";
          #binding-cells = <2>;
@@ -116,13 +105,16 @@ layer_name { \
          &kp TAB,         &lt os_1 Q,     &kp W,              &mtp LGUI E,    &kp R,          &kp T,
          &mt LCTRL ESC,   &lt remap_1 A,  &lt term_1 S,       &lt code_2 D,   &lt code_1 F,   &kp G,
          &sk LSHIFT,      &kp Z,          &kp X,              &kp C,          &lt numpad_1 V, &kp B,
-         &none,           &kp SPACE,      &none,
+         &none,           &none,          &none,
+         // &none,           &kp SPACE,      &none,
          // &kp LGUI,        &kp SPACE,      &kp LALT,
 
          &kp Y,           &kp U,          &mtp LGUI I,    &kp O,         &kp P,               &none,
          &kp H,           &kp J,          &kp K,          &kp L,         &space_colon_morph,  &none,
          &kp N,           &kp M,          &kp COMMA,      &kp DOT,       &kp FSLH,            &none,
-         &kp SPACE,       &none,          &none
+         &none,           &none,          &none
+
+         // &kp SPACE,       &none,          &none
 
          /*&trans,&trans,&trans,&trans,&trans,&trans,*/
          /*&trans,&trans,&trans,&trans,&trans,&trans,*/
@@ -141,18 +133,6 @@ layer_name { \
          &none,           &none,           &none,          &none,             &kp COLON,       &none,
          &none,           &kp BSPC,        &kp RET,        &kp SINGLE_QUOTE,  &kp SEMI,        &none,
          &kp LEFT,        &kp DOWN,        &kp UP,         &kp RIGHT,         &kp BSLH,        &none,
-         &trans,          &trans,          &trans
-      );
-
-      hands( macro_enter_layer,
-         &none,           &none,           &mcr_cmd_layer,       &none,          &none,           &none,
-         &none,           &none,           &none,                &none,          &none,           &none,
-         &none,           &none,           &none,                &none,          &none,           &none,
-         &trans,          &trans,          &trans,
-
-         &none,           &none,           &none,                &none,          &none,           &none,
-         &none,           &none,           &none,                &none,          &none,           &none,
-         &none,           &none,           &none,                &none,          &none,           &none,
          &trans,          &trans,          &trans
       );
 
