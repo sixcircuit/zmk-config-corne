@@ -40,24 +40,32 @@
          bindings = <&kp RET>, <&kp BSPC>;
          mods = <(MOD_LCTL)>;
       };
+      sticky_gui: sticky_gui {
+         label = "Sticky GUI";
+         compatible = "zmk,behavior-sticky-key";
+         bindings = <&kp LGUI>;
+         flavor = "lockable";
+         // release-after-ms = <5000>;  // Optional: auto-timeout after 5s
+      };
    };
 };
 
 #define base    0
-#define term_1  1
-#define term_2  2
-#define code_1  3
-#define code_2  4
-#define symb_1  5
-#define symb_2  6
-#define os_1    7
-#define os_2    8
-#define macro_1 9
-#define macro_2 10
-#define numpad_1  11
-#define numpad_2  12
-#define arrows_1  13
-#define arrows_2  14
+#define remap_1 1
+#define term_1  2
+#define term_2  3
+#define code_1  4
+#define code_2  5
+#define symb_1  6
+#define symb_2  7
+#define os_1    8
+#define os_2    9
+#define macro_1 10
+#define macro_2 11
+#define numpad_1  12
+#define numpad_2  13
+// #define arrows_1  14
+// #define arrows_2  15
 
 #define STRINGIFY(x) #x
 #define EXPAND_AND_STRINGIFY(x) STRINGIFY(x)
@@ -146,36 +154,45 @@ layer_name { \
       //   #binding-cells = <0>;
       //   bindings = <&macro_press &kp LSHFT> , <&macro_tap &kp Z &kp M &kp K> , <&macro_release &kp LSHFT>;
       //};
+      MACRO(cmd_tab, &macro_press &kp LGUI &macro_tap &kp TAB &macro_release &kp LGUI)
+      MACRO(cmd_shift_tab, &macro_press &kp LGUI &kp LSHFT &macro_tap &kp TAB &macro_release &kp LGUI &kp LSHFT)
    };
 
    keymap {
       compatible = "zmk,keymap";
 
       hands( base,
-         &kp TAB,         &lt os_1 Q,     &kp W,           &lt symb_1 E,   &kp R,          &kp T,
-         &mt LCTRL ESC,   &lt numpad_1 A, &lt term_1 S,    &lt code_2 D,   &lt code_1 F,   &kp G,
-         &kp LSHIFT,      &kp Z,          &kp X,           &kp C,          &lt arrows_1 V, &kp B,
+         &kp TAB,         &lt os_1 Q,     &lt os_2 W,      &lt symb_1 E,   &kp R,          &kp T,
+         &mt LCTRL ESC,   &lt remap_1 A,  &lt term_1 S,    &lt code_2 D,   &lt code_1 F,   &kp G,
+         &sk LSHIFT,      &kp Z,          &kp X,           &kp C,          &lt numpad_1 V, &kp B,
          &kp LGUI,        &kp SPACE,      &kp LALT,
 
-         &kp Y,           &kp U,          &kp I,          &kp O,         &kp P,          &kp BSPC,
-         &kp H,           &kp J,          &kp K,          &kp L,         &lt os_1 SEMI,  &ctrlqtgrv,
-         &kp N,           &kp M,          &kp COMMA,      &kp DOT,       &ctrlslhdlr,    &mt RSHIFT BSLH,
-         &none,           &none,          &none
-      // &kp SPACE,       &none,          &none
+         &kp Y,           &kp U,          &mt LGUI I,     &kp O,         &kp P,          &none,
+         &kp H,           &kp J,          &kp K,          &kp L,         &kp SPACE,      &none,
+         &kp N,           &kp M,          &kp COMMA,      &kp DOT,       &FSLH,          &none,
+      // &none,           &none,          &none
+         &kp SPACE,       &none,          &none
       // &kp SPACE,       &ctrlentbspc,   &kp RGUI
+      )
+
+      right( remap_1,
+         &none,           &none,           &none,          &none,          &none,           &kp BSPC,
+         &none,           &kp BSPC,        &RET,           &SINGLE_QUOTE,  &kp SEMI,        &none,
+         &kp LEFT,        &kp DOWN,        &kp UP,         &kp RIGHT,       &BSLH,          &none,
+         &trans,          &trans,          &trans
       )
 
       right( term_1,
          &none,            &kp PLUS,        &kp AMPS,        &kp PIPE,       &none,           &kp BSPC,
          &kp TILDE,        &kp MINUS,       &kp EXCL,        &kp PRCNT,      &kp STAR,        &none,
-         &none,            &kp EQUAL,       &kp AT,          &kp HASH,       &none,           &none,
+         &none,            &kp EQUAL,       &kp AT,          &kp HASH,       &FSLH,           &none,
          &trans,           &trans,          &trans
       )
 
       right( term_2,
          &none,            &kp PLUS,        &kp AMPS,        &kp PIPE,       &none,           &kp BSPC,
          &kp TILDE,        &kp MINUS,       &kp EXCL,        &kp PRCNT,      &kp STAR,        &none,
-         &none,            &kp EQUAL,       &kp AT,          &kp HASH,       &none,           &none,
+         &none,            &kp EQUAL,       &kp AT,          &kp HASH,       &FSLH,           &none,
          &trans,           &trans,          &trans
       )
 
@@ -187,10 +204,10 @@ layer_name { \
       )
 
       right( code_2,
-         &none,            &kp PLUS,        &kp AMPS,        &kp PIPE,       &none,           &kp BSPC,
-         &none,            &kp MINUS,       &kp EXCL,        &kp PRCNT,      &kp STAR,        &none,
-         &none,            &kp EQUAL,       &kp AT,          &kp HASH,       &kp FSLH,        &none,
-         &trans,           &trans,          &trans
+         &none,            &kp PLUS,           &kp AMPS,   &kp PIPE,         &none,           &kp BSPC,
+         &none,            &kp DOUBLE_QUOTES,  &kp GRAVE,  &kp SINGLE_QUOTE, &kp STAR,        &none,
+         &none,            &kp EQUAL,          &kp AT,     &kp HASH,         &kp FSLH,        &none,
+         &trans,           &trans,             &trans
       )
 
       right( symb_1,
@@ -215,9 +232,9 @@ layer_name { \
       )
 
       right( os_2,
-         &none,           &kp C_MUTE,      &kp C_VOL_DN,   &kp C_VOL_UP,    &none,           &none,
-         &none,           &kp C_PREV,      &kp C_PP,       &kp C_NEXT,      &none,           &none,
-         &none,           &none,           &kp C_BRI_DN,   &kp C_BRI_UP,    &none,           &none,
+         &none,           &none,           &none,      &none,    &none,           &none,
+         &none,           &cmd_shift_tab,  &cmd_tab,   &none,    &none,           &none,
+         &none,           &none,           &none,      &none,    &none,           &none,
          &trans,          &trans,          &trans
       )
 
@@ -237,31 +254,31 @@ layer_name { \
 
       right( numpad_1,
          &kp DOLLAR,      &kp N7,          &kp N8,          &kp N9,         &kp EQUAL,       &kp BSPC,
-         &kp PLUS,        &kp N4,          &kp N5,          &kp N6,         &ctrlentbspc,    &kp PRCNT,
+         &kp PLUS,        &kp N4,          &kp N5,          &kp N6,         &trans,          &kp PRCNT,
          &kp MINUS,       &kp N1,          &kp N2,          &kp N3,         &kp FSLH,        &kp DOT,
          &kp N0,          &trans,          &trans
       )
 
       right( numpad_2,
          &kp DOLLAR,      &kp N7,          &kp N8,          &kp N9,         &kp EQUAL,       &kp BSPC,
-         &kp PLUS,        &kp N4,          &kp N5,          &kp N6,         &ctrlentbspc,    &kp PRCNT,
+         &kp PLUS,        &kp N4,          &kp N5,          &kp N6,         &trans,          &kp PRCNT,
          &kp MINUS,       &kp N1,          &kp N2,          &kp N3,         &kp FSLH,        &kp DOT,
          &kp N0,          &trans,          &trans
       )
 
-      right( arrows_1,
-         &none,           &none,           &none,           &none,          &none,           &kp BSPC,
-         &kp LEFT,        &kp DOWN,        &kp UP,         &kp RIGHT,       &none,           &none,
-         &none,           &none,           &none,           &none,          &none,           &none,
-         &trans,          &trans,          &trans
-      )
+      // right( arrows_1,
+         // &none,           &none,           &none,           &none,          &none,           &kp BSPC,
+         // &kp LEFT,        &kp DOWN,        &kp UP,         &kp RIGHT,       &none,           &none,
+         // &none,           &none,           &none,           &none,          &none,           &none,
+         // &trans,          &trans,          &trans
+      // )
 
-      right( arrows_2,
-         &none,           &none,           &none,           &none,          &none,           &kp BSPC,
-         &kp LEFT,        &kp DOWN,        &kp UP,         &kp RIGHT,       &none,           &none,
-         &none,           &none,           &none,           &none,          &none,           &none,
-         &trans,          &trans,          &trans
-      )
+      // right( arrows_2,
+         // &none,           &none,           &none,           &none,          &none,           &kp BSPC,
+         // &kp LEFT,        &kp DOWN,        &kp UP,         &kp RIGHT,       &none,           &none,
+         // &none,           &none,           &none,           &none,          &none,           &none,
+         // &trans,          &trans,          &trans
+      // )
    };
 };
 
