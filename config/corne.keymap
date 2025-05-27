@@ -2,7 +2,6 @@
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
 
-#define TR &trans
 #define STRINGIFY(x) #x
 #define EXPAND_AND_STRINGIFY(x) STRINGIFY(x)
 #define MACRO(NAME, BINDINGS) \
@@ -34,7 +33,7 @@ layer_name { \
    rt1, rt2, rt3, rt4, rt5, rt6, rm1, rm2, rm3, rm4, rm5, rm6, rb1, rb2, rb3, rb4, rb5, rb6, rth1, rth2, rth3 \
 ) \
 hands(layer_name,
-   TR TR TR TR TR TR TR TR TR TR TR TR TR TR TR TR TR TR TR TR TR \
+   &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans \
    rt1 rt2 rt3 rt4 rt5 rt6 rm1 rm2 rm3 rm4 rm5 rm6 rb1 rb2 rb3 rb4 rb5 rb6 rth1 rth2 rth3 \
 )
 
@@ -43,7 +42,7 @@ hands(layer_name,
 ) \
 hands(layer_name,
    lt1 lt2 lt3 lt4 lt5 lt6 lm1 lm2 lm3 lm4 lm5 lm6 lb1 lb2 lb3 lb4 lb5 lb6 lth1 lth2 lth3 \
-   TR TR TR TR TR TR TR TR TR TR TR TR TR TR TR TR TR TR TR TR TR \
+   &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans \
 )
 
 #define base         0
