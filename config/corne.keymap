@@ -2,6 +2,69 @@
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
 
+#define TR &trans
+#define STRINGIFY(x) #x
+#define EXPAND_AND_STRINGIFY(x) STRINGIFY(x)
+#define MACRO(NAME, BINDINGS) \
+mcr_##NAME: mcr_##NAME { \
+   label = EXPAND_AND_STRINGIFY(mcr_##NAME); \
+   compatible = "zmk,behavior-macro"; \
+   #binding-cells = <0>; \
+   wait-ms = <20>; \
+   tap-ms = <10>; \
+   bindings = <BINDINGS>; \
+}
+
+// setup hand mapping define and fix up symbol tables
+
+#define hands(layer_name, \
+   lt1, lt2, lt3, lt4, lt5, lt6, lm1, lm2, lm3, lm4, lm5, lm6, lb1, lb2, lb3, lb4, lb5, lb6, lth1, lth2, lth3, \
+   rt1, rt2, rt3, rt4, rt5, rt6, rm1, rm2, rm3, rm4, rm5, rm6, rb1, rb2, rb3, rb4, rb5, rb6, rth1, rth2, rth3 \
+) \
+layer_name { \
+   display-name = EXPAND_AND_STRINGIFY(layer_name); \
+   bindings = < \
+      lt1 lt2 lt3 lt4 lt5 lt6 rt1 rt2 rt3 rt4 rt5 rt6 lm1 lm2 lm3 lm4 lm5 lm6 \
+      rm1 rm2 rm3 rm4 rm5 rm6 lb1 lb2 lb3 lb4 lb5 lb6 rb1 rb2 rb3 rb4 rb5 rb6 \
+      lth1 lth2 lth3 rth1 rth2 rth3 \
+   >; \
+}
+
+#define right(layer_name, \
+   rt1, rt2, rt3, rt4, rt5, rt6, rm1, rm2, rm3, rm4, rm5, rm6, rb1, rb2, rb3, rb4, rb5, rb6, rth1, rth2, rth3 \
+) \
+hands(layer_name,
+   TR TR TR TR TR TR TR TR TR TR TR TR TR TR TR TR TR TR TR TR TR \
+   rt1 rt2 rt3 rt4 rt5 rt6 rm1 rm2 rm3 rm4 rm5 rm6 rb1 rb2 rb3 rb4 rb5 rb6 rth1 rth2 rth3 \
+)
+
+#define left(layer_name, \
+   lt1, lt2, lt3, lt4, lt5, lt6, lm1, lm2, lm3, lm4, lm5, lm6, lb1, lb2, lb3, lb4, lb5, lb6, lth1, lth2, lth3 \
+) \
+hands(layer_name,
+   lt1 lt2 lt3 lt4 lt5 lt6 lm1 lm2 lm3 lm4 lm5 lm6 lb1 lb2 lb3 lb4 lb5 lb6 lth1 lth2 lth3 \
+   TR TR TR TR TR TR TR TR TR TR TR TR TR TR TR TR TR TR TR TR TR \
+)
+
+#define base         0
+#define remap_1      1
+#define macro_enter  2
+#define term_1       3
+#define term_2       4
+#define code_1       5
+#define code_2       6
+#define symb_1       7
+#define symb_2       8
+#define os_1         9
+#define os_2         10
+#define cmd_1        11
+#define macro_1      12
+#define macro_2      13
+#define numpad_1     14
+#define numpad_2     15
+// #define arrows_1  16
+// #define arrows_2  17
+
 / {
    keymap {
       compatible = "zmk,keymap";
@@ -85,102 +148,6 @@
          // mods = <(MOD_LCTL)>;
       // };
 
-#define STRINGIFY(x) #x
-#define EXPAND_AND_STRINGIFY(x) STRINGIFY(x)
-#define MACRO(NAME, BINDINGS) \
-mcr_##NAME: mcr_##NAME { \
-   label = EXPAND_AND_STRINGIFY(mcr_##NAME); \
-   compatible = "zmk,behavior-macro"; \
-   #binding-cells = <0>; \
-   wait-ms = <20>; \
-   tap-ms = <10>; \
-   bindings = <BINDINGS>; \
-};
-
-// setup hand mapping define and fix up symbol tables
-
-#define hands(layer_name, \
-   lt1, lt2, lt3, lt4, lt5, lt6, \
-   lm1, lm2, lm3, lm4, lm5, lm6, \
-   lb1, lb2, lb3, lb4, lb5, lb6, \
-   lth1, lth2, lth3, \
-   rt1, rt2, rt3, rt4, rt5, rt6, \
-   rm1, rm2, rm3, rm4, rm5, rm6, \
-   rb1, rb2, rb3, rb4, rb5, rb6, \
-   rth1, rth2, rth3 \
-) \
-layer_name { \
-   display-name = EXPAND_AND_STRINGIFY(layer_name); \
-   bindings = < \
-      lt1 lt2 lt3 lt4 lt5 lt6 \
-      rt1 rt2 rt3 rt4 rt5 rt6 \
-      lm1 lm2 lm3 lm4 lm5 lm6 \
-      rm1 rm2 rm3 rm4 rm5 rm6 \
-      lb1 lb2 lb3 lb4 lb5 lb6 \
-      rb1 rb2 rb3 rb4 rb5 rb6 \
-      lth1 lth2 lth3 \
-      rth1 rth2 rth3 \
-   >; \
-};
-
-#define right(layer_name, \
-   rt1, rt2, rt3, rt4, rt5, rt6, \
-   rm1, rm2, rm3, rm4, rm5, rm6, \
-   rb1, rb2, rb3, rb4, rb5, rb6, \
-   rth1, rth2, rth3 \
-) \
-layer_name { \
-   display-name = EXPAND_AND_STRINGIFY(layer_name); \
-   bindings = < \
-      &trans           &trans          &trans          &trans          &trans           &trans \
-      rt1 rt2 rt3 rt4 rt5 rt6 \
-      &trans           &trans          &trans          &trans          &trans           &trans \
-      rm1 rm2 rm3 rm4 rm5 rm6 \
-      &trans           &trans          &trans          &trans          &trans           &trans \
-      rb1 rb2 rb3 rb4 rb5 rb6 \
-      &trans           &trans          &trans \
-      rth1 rth2 rth3 \
-   >; \
-};
-
-#define left(layer_name, \
-   lt1, lt2, lt3, lt4, lt5, lt6, \
-   lm1, lm2, lm3, lm4, lm5, lm6, \
-   lb1, lb2, lb3, lb4, lb5, lb6, \
-   lth1, lth2, lth3 \
-) \
-layer_name { \
-   display-name = EXPAND_AND_STRINGIFY(layer_name); \
-   bindings = < \
-      lt1 lt2 lt3 lt4 lt5 lt6 \
-      &trans           &trans          &trans          &trans          &trans           &trans \
-      lm1 lm2 lm3 lm4 lm5 lm6 \
-      &trans           &trans          &trans          &trans          &trans           &trans \
-      lb1 lb2 lb3 lb4 lb5 lb6 \
-      &trans           &trans          &trans          &trans          &trans           &trans \
-      lth1 lth2 lth3 \
-      &trans           &trans          &trans \
-   >; \
-};
-
-#define base         0
-#define remap_1      1
-#define macro_enter  2
-#define term_1       3
-#define term_2       4
-#define code_1       5
-#define code_2       6
-#define symb_1       7
-#define symb_2       8
-#define os_1         9
-#define os_2         10
-#define cmd_1        11
-#define macro_1      12
-#define macro_2      13
-#define numpad_1     14
-#define numpad_2     15
-// #define arrows_1  16
-// #define arrows_2  17
 
 / {
    behaviors {
@@ -197,11 +164,9 @@ layer_name { \
          // release-after-ms = <5000>;  // Optional: auto-timeout after 5s
       };
    };
-};
 
-/ {
    macros {
-      MACRO(zmk, &macro_press &kp LSHFT &macro_tap &kp Z &kp M &kp K &macro_release &kp LSHFT)
+      MACRO(zmk, &macro_press &kp LSHFT &macro_tap &kp Z &kp M &kp K &macro_release &kp LSHFT);
       //MACRO(zmk, )
       //zed_em_kay: zed_em_kay {
       //   compatible = "zmk,behavior-macro";
@@ -209,9 +174,9 @@ layer_name { \
       //   bindings = <&macro_press &kp LSHFT> , <&macro_tap &kp Z &kp M &kp K> , <&macro_release &kp LSHFT>;
       //};
       // MACRO(cmd_tab, &macro_press &kp LGUI &macro_tap &kp TAB &macro_release &kp LGUI)
-      MACRO(shift_tab, &macro_press &kp LSHFT &macro_tap &kp TAB &macro_release &kp LSHFT)
-      MACRO(cmd_lock_and_layer, &sticky_cmd &sticky_cmd &mo cmd_1)
-    };
+      MACRO(shift_tab, &macro_press &kp LSHFT &macro_tap &kp TAB &macro_release &kp LSHFT);
+      MACRO(cmd_lock_and_layer, &sticky_cmd &sticky_cmd &mo cmd_1);
+   };
 
    keymap {
 
@@ -226,17 +191,17 @@ layer_name { \
          &kp Y,           &kp U,          &mt LGUI I,     &kp O,         &kp P,          &none,
          &kp H,           &kp J,          &kp K,          &kp L,         &kp SPACE,      &none,
          &kp N,           &kp M,          &kp COMMA,      &kp DOT,       &FSLH,          &none,
-      // &none,           &none,          &none
          &kp SPACE,       &none,          &none
+      // &none,           &none,          &none
       // &kp SPACE,       &ctrlentbspc,   &kp RGUI
-      )
+      );
 
       right( remap_1_layer,
          &none,           &none,           &none,          &none,          &none,           &none,
          &none,           &kp BSPC,        &RET,           &SINGLE_QUOTE,  &kp SEMI,        &none,
          &kp LEFT,        &kp DOWN,        &kp UP,         &kp RIGHT,       &BSLH,          &none,
          &trans,          &trans,          &trans
-      )
+      );
 
       hands( macro_enter_layer,
          &none,           &none,           &cmd_lock_and_layer,  &none,          &none,           &none,
@@ -248,42 +213,42 @@ layer_name { \
          &none,           &none,           &none,                &none,          &none,           &none,
          &none,           &none,           &none,                &none,          &none,           &none,
          &trans,          &trans,          &trans
-      )
+      );
 
       right( term_1_layer,
          &none,            &kp PLUS,        &kp AMPS,        &kp PIPE,       &none,           &none,
          &kp TILDE,        &kp MINUS,       &kp EXCL,        &kp PRCNT,      &kp STAR,        &none,
          &none,            &kp EQUAL,       &kp AT,          &kp HASH,       &FSLH,           &none,
          &trans,           &trans,          &trans
-      )
+      );
 
       right( term_2_layer,
          &none,            &kp PLUS,        &kp AMPS,        &kp PIPE,       &none,           &none,
          &kp TILDE,        &kp MINUS,       &kp EXCL,        &kp PRCNT,      &kp STAR,        &none,
          &none,            &kp EQUAL,       &kp AT,          &kp HASH,       &FSLH,           &none,
          &trans,           &trans,          &trans
-      )
+      );
 
       right( code_1_layer,
          &none,            &none,           &kp LPAR,        &kp RPAR,       &kp CARET,       &none,
          &kp PLUS,         &kp UNDER,       &kp LBRC,        &kp RBRC,       &kp STAR,        &none,
          &kp MINUS,        &kp EQUAL,       &kp LBKT,        &kp RBKT,       &kp DOLLAR,      &mcr_zmk,
          &trans,           &trans,          &trans
-      )
+      );
 
       right( code_2_layer,
          &none,            &kp PLUS,           &kp AMPS,   &kp PIPE,         &none,           &none,
          &none,            &kp DOUBLE_QUOTES,  &kp GRAVE,  &kp SINGLE_QUOTE, &kp STAR,        &none,
          &none,            &kp EQUAL,          &kp AT,     &kp HASH,         &kp FSLH,        &none,
          &trans,           &trans,             &trans
-      )
+      );
 
       right( symb_1_layer,
          &none,            &kp PLUS,        &kp AMPS,        &kp PIPE,       &none,           &none,
          &none,            &kp MINUS,       &kp EXCL,        &kp PRCNT,      &kp STAR,        &none,
          &none,            &kp EQUAL,       &kp AT,          &kp HASH,       &kp FSLH,        &none,
          &trans,           &trans,          &trans
-      )
+      );
 
       right( symb_2_layer,
          &none,            &kp PLUS,        &kp AMPS,        &kp PIPE,       &none,           &none,
@@ -297,49 +262,49 @@ layer_name { \
          &none,           &kp C_PREV,      &kp C_PP,       &kp C_NEXT,      &none,           &none,
          &none,           &none,           &kp C_BRI_DN,   &kp C_BRI_UP,    &none,           &none,
          &trans,          &trans,          &trans
-      )
+      );
 
       right( os_2_layer,
          &none,           &none,           &none,      &none,    &none,           &none,
          &none,           &none,           &none,      &none,    &none,           &none,
          &none,           &none,           &none,      &none,    &none,           &none,
          &trans,          &trans,          &trans
-      )
+      );
 
       right( cmd_1_layer,
          &none,           &none,           &none,        &none,    &none,           &none,
          &none,           &kp TAB,         &shift_tab,   &none,    &none,           &none,
          &none,           &none,           &none,        &none,    &none,           &none,
          &trans,          &trans,          &trans
-      )
+      );
 
       right( macro_1_layer,
          &none,           &kp C_MUTE,      &kp C_VOL_DN,   &kp C_VOL_UP,    &none,           &none,
          &none,           &kp C_PREV,      &kp C_PP,       &kp C_NEXT,      &none,           &none,
          &none,           &none,           &kp C_BRI_DN,   &kp C_BRI_UP,    &none,           &none,
          &trans,          &trans,          &trans
-      )
+      );
 
       right( macro_2_layer,
          &none,           &kp C_MUTE,      &kp C_VOL_DN,   &kp C_VOL_UP,    &none,           &none,
          &none,           &kp C_PREV,      &kp C_PP,       &kp C_NEXT,      &none,           &none,
          &none,           &none,           &kp C_BRI_DN,   &kp C_BRI_UP,    &none,           &none,
          &trans,          &trans,          &trans
-      )
+      );
 
       right( numpad_1_layer,
          &kp DOLLAR,      &kp N7,          &kp N8,          &kp N9,         &kp EQUAL,       &none,
          &kp PLUS,        &kp N4,          &kp N5,          &kp N6,         &trans,          &kp PRCNT,
          &kp MINUS,       &kp N1,          &kp N2,          &kp N3,         &kp FSLH,        &kp DOT,
          &kp N0,          &trans,          &trans
-      )
+      );
 
       right( numpad_2_layer,
          &kp DOLLAR,      &kp N7,          &kp N8,          &kp N9,         &kp EQUAL,       &none,
          &kp PLUS,        &kp N4,          &kp N5,          &kp N6,         &trans,          &kp PRCNT,
          &kp MINUS,       &kp N1,          &kp N2,          &kp N3,         &kp FSLH,        &kp DOT,
          &kp N0,          &trans,          &trans
-      )
+      );
 
 
 
@@ -348,7 +313,7 @@ layer_name { \
          // &kp LEFT,        &kp DOWN,        &kp UP,         &kp RIGHT,       &none,           &none,
          // &none,           &none,           &none,           &none,          &none,           &none,
          // &trans,          &trans,          &trans
-      // )
+      // );
 
       // right( arrows_2_layer,
          // &none,           &none,           &none,           &none,          &none,           &none,
