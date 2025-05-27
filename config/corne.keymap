@@ -139,12 +139,12 @@ layer_name { \
 
 / {
    behaviors {
-      ctrl_d_lt: ctrl_d_lt {
-         compatible = "zmk,behavior-mod-morph";
-         #binding-cells = <0>;
-         bindings = <&kp D>, <&lt code_2 D>;
-         mods = <MOD_LCTL>;
-      };
+      // ctrl_d_lt: ctrl_d_lt {
+         // compatible = "zmk,behavior-mod-morph";
+         // #binding-cells = <0>;
+         // bindings = <&kp D>, <&lt code_2 D>;
+         // mods = <MOD_LCTL>;
+      // };
       sticky_cmd: sticky_cmd {
          compatible = "zmk,behavior-sticky-key";
          bindings = <&kp LGUI>;
@@ -173,8 +173,8 @@ layer_name { \
       compatible = "zmk,keymap";
 
       hands( base_layer,
-         &kp TAB,         &lt os_1 Q,     &lt macro_enter W,  &lt symb_1 E,   &kp R,          &kp T,
-         &mt LCTRL ESC,   &lt remap_1 A,  &lt term_1 S,       &ctrl_d_lt,     &lt code_1 F,   &kp G,
+         &kp TAB,         &lt os_1 Q,     &lt term_1 W,  &lt symb_1 E,   &kp R,          &kp T,
+         &mt LCTRL ESC,   &lt remap_1 A,  &lt term_1 S,       &lt code_2 D,   &lt code_1 F,   &kp G,
          &sk LSHIFT,      &kp Z,          &kp X,              &kp C,          &lt numpad_1 V, &kp B,
          &kp LGUI,        &kp SPACE,      &kp LALT,
 
