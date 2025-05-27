@@ -259,7 +259,7 @@ layer_name { \
 
       right( cmd_1,
          &none,           &none,           &none,        &none,    &none,           &none,
-         &none,           &kp TAB,a        &shift_tab,   &none,    &none,           &none,
+         &none,           &kp TAB,         &shift_tab,   &none,    &none,           &none,
          &none,           &none,           &none,        &none,    &none,           &none,
          &trans,          &trans,          &trans
       )
