@@ -54,20 +54,21 @@ layer_name { \
 }
 
 #define base         0
-#define remap_1      1
-#define term_1       2
-#define term_2       3
-#define code_1       4
-#define code_2       5
-#define symb_1       6
-#define symb_2       7
-#define os_1         8
-#define os_2         9
-#define cmd_1        10
-#define macro_1      11
-#define macro_2      12
-#define numpad_1     13
-#define numpad_2     14
+#define remap_rh_1   1
+#define remap_lh_1   2
+#define term_1       3
+#define term_2       4
+#define code_1       5
+#define code_2       6
+#define symb_1       7
+#define symb_2       8
+#define os_1         9
+#define os_2         10
+#define cmd_1        11
+#define macro_1      12
+#define macro_2      13
+#define numpad_1     14
+#define numpad_2     15
 // #define arrows_1  15
 // #define arrows_2  16
 
@@ -101,16 +102,16 @@ layer_name { \
 
       hands( base_layer,
 
-         &kp TAB,         &lt os_1 Q,     &kp W,              &mtp LGUI E,    &kp R,          &kp T,
-         &mt LCTRL ESC,   &lt remap_1 A,  &lt term_1 S,       &lt code_2 D,   &lt code_1 F,   &kp G,
-         &sk LSHIFT,      &kp Z,          &kp X,              &kp C,          &lt numpad_1 V, &kp B,
-         &none,           &none,          &none,
+         &kp TAB,         &lt os_1 Q,        &kp W,              &mtp LGUI E,    &kp R,          &kp T,
+         &mt LCTRL ESC,   &lt remap_rh_1 A,  &lt term_1 S,       &lt code_2 D,   &lt code_1 F,   &kp G,
+         &sk LSHIFT,      &kp Z,             &kp X,              &kp C,          &lt numpad_1 V, &kp B,
+         &none,           &none,             &none,
          // &none,           &kp SPACE,      &none,
          // &kp LGUI,        &kp SPACE,      &kp LALT,
 
-         &kp Y,           &kp U,          &mtp LGUI I,    &kp O,         &kp P,               &none,
-         &kp H,           &kp J,          &kp K,          &kp L,         &space_colon_morph,  &kp RET,
-         &kp N,           &kp M,          &kp COMMA,      &kp DOT,       &kp FSLH,            &none,
+         &kp Y,           &kp U,          &mtp LGUI I,       &kp O,         &kp P,               &none,
+         &kp H,           &kp J,          &lt remap_lh_1 K,  &kp L,         &space_colon_morph,  &kp RET,
+         &kp N,           &kp M,          &kp COMMA,         &kp DOT,       &kp FSLH,            &none,
          &none,           &none,          &none
 
          // &kp SPACE,       &none,          &none
@@ -128,10 +129,17 @@ layer_name { \
          // &kp SPACE,       &ctrlentbspc,   &kp RGUI
       );
 
-      right( remap_1_layer,
+      right( remap_rh_1,
          &none,           &none,           &none,          &none,             &kp COLON,       &none,
          &none,           &kp BSPC,        &kp RET,        &kp SINGLE_QUOTE,  &kp SEMI,        &none,
          &kp LEFT,        &kp DOWN,        &kp UP,         &kp RIGHT,         &kp BSLH,        &none,
+         &trans,          &trans,          &trans
+      );
+
+      left( remap_lh_1,
+         &none,           &none,           &none,             &none,             &kp COLON,       &none,
+         &none,           &kp BSPC,        &kp SINGLE_QUOTE,  &kp RET,           &kp SEMI,        &none,
+         &kp LEFT,        &kp DOWN,        &kp UP,            &kp RIGHT,         &kp BSLH,        &none,
          &trans,          &trans,          &trans
       );
 
