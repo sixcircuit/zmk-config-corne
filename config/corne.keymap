@@ -93,7 +93,6 @@ layer_name { \
    macros {
       MACRO(zmk, &macro_press &kp LSHFT &macro_tap &kp Z &kp M &kp K &macro_release &kp LSHFT);
       MACRO(shift_tab, &macro_press &kp LSHFT &macro_tap &kp TAB &macro_release &kp LSHFT);
-      MACRO(cmd_layer, &kt_on LGUI &mo cmd_1);
    };
 
    keymap {
@@ -110,7 +109,7 @@ layer_name { \
          // &kp LGUI,        &kp SPACE,      &kp LALT,
 
          &kp Y,           &kp U,          &mtp LGUI I,    &kp O,         &kp P,               &none,
-         &kp H,           &kp J,          &kp K,          &kp L,         &space_colon_morph,  &none,
+         &kp H,           &kp J,          &kp K,          &kp L,         &space_colon_morph,  &kp RET,
          &kp N,           &kp M,          &kp COMMA,      &kp DOT,       &kp FSLH,            &none,
          &none,           &none,          &none
 
