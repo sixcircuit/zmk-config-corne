@@ -105,16 +105,19 @@ layer_name { \
          &kp TAB,         &lt os_1 Q,        &kp W,              &mtp LGUI E,    &kp R,          &kp T,
          &mt LCTRL ESC,   &lt remap_rh_1 A,  &lt term_1 S,       &lt code_2 D,   &lt code_1 F,   &kp G,
          &sk LSHIFT,      &kp Z,             &kp X,              &kp C,          &lt numpad_1 V, &kp B,
-         &none,           &none,             &none,
+         &kp SPACE,       &kp SPACE,      &kp SPACE,
+         // &none,           &none,             &none,
          // &none,           &kp SPACE,      &none,
          // &kp LGUI,        &kp SPACE,      &kp LALT,
 
          &kp Y,           &kp U,          &mtp LGUI I,       &kp O,         &kp P,               &none,
          &kp H,           &kp J,          &lt remap_lh_1 K,  &kp L,         &space_colon_morph,  &kp RET,
          &kp N,           &kp M,          &kp COMMA,         &kp DOT,       &kp FSLH,            &none,
-         &none,           &none,          &none
-
+         &kp SPACE,       &kp SPACE,      &kp SPACE
+         // &none,           &none,          &none
          // &kp SPACE,       &none,          &none
+         // &none,           &none,          &none
+         // &kp SPACE,       &ctrlentbspc,   &kp RGUI
 
          /*&trans,&trans,&trans,&trans,&trans,&trans,*/
          /*&trans,&trans,&trans,&trans,&trans,&trans,*/
@@ -125,8 +128,6 @@ layer_name { \
          /*&trans,&trans,&trans,&trans,&trans,&trans,*/
          /*&trans,&trans,&trans*/
 
-         // &none,           &none,          &none
-         // &kp SPACE,       &ctrlentbspc,   &kp RGUI
       );
 
       right( remap_rh_1,
