@@ -138,7 +138,7 @@ layer_name { \
 
       left( remap_lh_1,
          &none,           &none,           &none,             &none,             &kp COLON,       &none,
-         &none,           &kp BSPC,        &kp SINGLE_QUOTE,  &kp RET,           &kp SEMI,        &none,
+         &none,           &kp SEMI,        &kp SINGLE_QUOTE,  &kp RET,           &kp BSPC,        &none,
          &kp LEFT,        &kp DOWN,        &kp UP,            &kp RIGHT,         &kp BSLH,        &none,
          &trans,          &trans,          &trans
       );
@@ -165,9 +165,9 @@ layer_name { \
       );
 
       right( code_2_layer,
-         &none,            &kp PLUS,           &kp AMPS,   &kp PIPE,         &none,           &none,
-         &none,            &kp DOUBLE_QUOTES,  &kp GRAVE,  &kp SINGLE_QUOTE, &kp STAR,        &none,
-         &none,            &kp EQUAL,          &kp AT,     &kp HASH,         &kp FSLH,        &none,
+         &none,            &kp PLUS,           &kp AMPS,            &kp PIPE,         &none,           &none,
+         &none,            &kp GRAVE,          &kp DOUBLE_QUOTES,   &kp SINGLE_QUOTE, &kp STAR,        &none,
+         &none,            &kp EQUAL,          &kp AT,              &kp HASH,         &kp FSLH,        &none,
          &trans,           &trans,             &trans
       );
 
