@@ -167,9 +167,6 @@ layer_name { \
       MACRO(shift_tab, &macro_press &kp LSHFT &macro_tap &kp TAB &macro_release &kp LSHFT)
       MACRO(cmd_lock_and_layer, &sticky_cmd &sticky_cmd &mo cmd_1)
     };
-};
-
-/ {
 
    keymap {
 
