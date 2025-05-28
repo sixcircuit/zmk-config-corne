@@ -53,23 +53,23 @@ layer_name { \
    >; \
 }
 
-#define base         0
-#define remap_rh_1   1
-#define remap_lh_1   2
-#define term_1       3
-#define term_2       4
-#define code_1       5
-#define code_2       6
-#define symb_1       7
-#define symb_2       8
-#define os_1         9
-#define os_2         10
-#define cmd_1        11
-#define macro_1      12
-#define macro_2      13
-#define numpad_1     14
-#define numpad_2     15
-// #define arrows_1  15
+#define BASE         0
+#define RERIGHT_1    1
+#define RELEFT_1     2
+#define TERM_1       3
+#define TERM_2       4
+#define CODE_1       5
+#define CODE_2       6
+#define SYMB_1       7
+#define SYMB_2       8
+#define OS_1         9
+#define OS_2         10
+#define CMD_1        11
+#define MACRO_1      12
+#define MACRO_2      13
+#define NUMPAD_1     14
+#define NUMPAD_2     15
+#define ARROWS_1     16
 // #define arrows_2  16
 
 / {
@@ -96,28 +96,36 @@ layer_name { \
       MACRO(shift_tab, &macro_press &kp LSHFT &macro_tap &kp TAB &macro_release &kp LSHFT);
    };
 
+   conditional_layers {
+      compatible = "zmk,conditional-layers";
+      tri_layer {
+         if-layers = <NUMPAD_1 TERM_1>;
+         then-layer = <ARROWS_1>;
+      };
+   };
+
    keymap {
 
       compatible = "zmk,keymap";
 
-      hands( base_layer,
+      hands( base,
 
-         &kp TAB,         &lt os_1 Q,        &kp W,              &mtp LGUI E,    &kp R,          &kp T,
-         &mt LCTRL ESC,   &lt remap_rh_1 A,  &lt term_1 S,       &lt code_2 D,   &lt code_1 F,   &kp G,
-         &sk LSHIFT,      &kp Z,             &kp X,              &kp C,          &lt numpad_1 V, &kp B,
-         &kp SPACE,       &kp SPACE,      &kp SPACE,
-         // &none,           &none,             &none,
-         // &none,           &kp SPACE,      &none,
-         // &kp LGUI,        &kp SPACE,      &kp LALT,
+         &kp TAB       , &lt OS_1 Q     , &kp W        , &mtp LGUI E  , &kp R           , &kp T ,
+         &mt LCTRL ESC , &lt NUMPAD_1 A , &lt TERM_1 S , &lt CODE_2 D , &lt CODE_1 F    , &kp G ,
+         &sk LSHIFT    , &kp Z          , &kp X        , &kp C        , &lt RERIGHT_1 V , &kp B ,
+         &kp SPACE     , &kp SPACE      , &kp SPACE    ,
+         // &none      , &none          , &none        ,
+         // &none      , &kp SPACE      , &none        ,
+         // &kp LGUI   , &kp SPACE      , &kp LALT     ,
 
-         &kp Y,           &kp U,          &mtp LGUI I,       &kp O,         &kp P,               &none,
-         &kp H,           &kp J,          &lt remap_lh_1 K,  &kp L,         &space_colon_morph,  &kp RET,
-         &kp N,           &kp M,          &kp COMMA,         &kp DOT,       &kp FSLH,            &none,
-         &kp SPACE,       &kp SPACE,      &kp SPACE
-         // &none,           &none,          &none
-         // &kp SPACE,       &none,          &none
-         // &none,           &none,          &none
-         // &kp SPACE,       &ctrlentbspc,   &kp RGUI
+         &kp Y         , &kp U          , &mtp LGUI I  , &kp O        , &kp P           , &none ,
+         &kp H         , &kp J          , &kp K        , &kp L        , &kp SEMI        , &none ,
+         &kp N         , &lt RELEFT_1 M , &kp COMMA    , &kp DOT      , &kp FSLH        , &none ,
+         &kp SPACE     , &kp SPACE      , &kp SPACE
+         // &none      , &none          , &none
+         // &kp SPACE  , &none          , &none
+         // &none      , &none          , &none
+         // &kp SPACE  , &ctrlentbspc   , &kp RGUI
 
          /*&trans,&trans,&trans,&trans,&trans,&trans,*/
          /*&trans,&trans,&trans,&trans,&trans,&trans,*/
@@ -130,119 +138,119 @@ layer_name { \
 
       );
 
-      right( remap_rh_1,
-         &none,           &none,           &none,          &none,             &kp COLON,       &none,
-         &none,           &kp BSPC,        &kp RET,        &kp SINGLE_QUOTE,  &kp SEMI,        &none,
-         &kp LEFT,        &kp DOWN,        &kp UP,         &kp RIGHT,         &kp BSLH,        &none,
+      right( right,
+         &none,           &none,           &none,          &none,         &none,       &none,
+         &none,           &kp BSPC,        &kp RET,        &none,         &kp BSPC,       &none,
+         &none,           &kp LC(D),       &kp LC(U),      &none,         &kp BSLH,    &none,
          &trans,          &trans,          &trans
       );
 
-      left( remap_lh_1,
-         &none,           &none,           &none,             &none,             &kp COLON,       &none,
-         &none,           &kp SEMI,        &kp SINGLE_QUOTE,  &kp RET,           &kp BSPC,        &none,
-         &kp LEFT,        &kp DOWN,        &kp UP,            &kp RIGHT,         &kp BSLH,        &none,
+      left( left,
+         &none,           &none,           &none,             &none,             &none,           &none,
+         &none,           &kp BSPC,        &none,             &kp RET,           &kp BSPC,        &none,
+         &none,        &none,        &none,            &none,         &none,           &none,
          &trans,          &trans,          &trans
       );
 
-      right( term_1_layer,
+      right( term_1,
          &none,            &kp PLUS,        &kp AMPS,        &kp PIPE,       &none,           &none,
          &kp TILDE,        &kp MINUS,       &kp EXCL,        &kp PRCNT,      &kp STAR,        &none,
          &none,            &kp EQUAL,       &kp AT,          &kp HASH,       &kp FSLH,        &none,
          &trans,           &trans,          &trans
       );
 
-      right( term_2_layer,
+      right( term_2,
          &none,            &kp PLUS,        &kp AMPS,        &kp PIPE,       &none,           &none,
          &kp TILDE,        &kp MINUS,       &kp EXCL,        &kp PRCNT,      &kp STAR,        &none,
          &none,            &kp EQUAL,       &kp AT,          &kp HASH,       &kp FSLH,        &none,
          &trans,           &trans,          &trans
       );
 
-      right( code_1_layer,
-         &none,            &none,           &kp LPAR,        &kp RPAR,       &kp CARET,       &none,
+      right( code_1,
+         &none,            &kp BSLH,        &kp LPAR,        &kp RPAR,       &kp CARET,       &none,
          &kp PLUS,         &kp UNDER,       &kp LBRC,        &kp RBRC,       &kp STAR,        &none,
          &kp MINUS,        &kp EQUAL,       &kp LBKT,        &kp RBKT,       &kp DOLLAR,      &mcr_zmk,
          &trans,           &trans,          &trans
       );
 
-      right( code_2_layer,
+      right( code_2,
          &none,            &kp PLUS,           &kp AMPS,            &kp PIPE,         &none,           &none,
-         &none,            &kp GRAVE,          &kp DOUBLE_QUOTES,   &kp SINGLE_QUOTE, &kp STAR,        &none,
+         &none,            &kp DOUBLE_QUOTES,  &kp GRAVE,           &kp SINGLE_QUOTE, &kp STAR,        &none,
          &none,            &kp EQUAL,          &kp AT,              &kp HASH,         &kp FSLH,        &none,
          &trans,           &trans,             &trans
       );
 
-      right( symb_1_layer,
+      right( symb_1,
          &none,            &kp PLUS,        &kp AMPS,        &kp PIPE,       &none,           &none,
          &none,            &kp MINUS,       &kp EXCL,        &kp PRCNT,      &kp STAR,        &none,
          &none,            &kp EQUAL,       &kp AT,          &kp HASH,       &kp FSLH,        &none,
          &trans,           &trans,          &trans
       );
 
-      right( symb_2_layer,
+      right( symb_2,
          &none,            &kp PLUS,        &kp AMPS,        &kp PIPE,       &none,           &none,
          &none,            &kp MINUS,       &kp EXCL,        &kp PRCNT,      &kp STAR,        &none,
          &none,            &kp EQUAL,       &kp AT,          &kp HASH,       &kp FSLH,        &none,
          &trans,           &trans,          &trans
       );
 
-      right( os_1_layer,
+      right( os_1,
          &none,           &kp C_MUTE,      &kp C_VOL_DN,   &kp C_VOL_UP,    &none,  &studio_unlock,
          &none,           &kp C_PREV,      &kp C_PP,       &kp C_NEXT,      &none,           &none,
          &none,           &none,           &kp C_BRI_DN,   &kp C_BRI_UP,    &none,           &none,
          &trans,          &trans,          &trans
       );
 
-      right( os_2_layer,
+      right( os_2,
          &none,           &none,           &none,      &none,    &none,           &none,
          &none,           &none,           &none,      &none,    &none,           &none,
          &none,           &none,           &none,      &none,    &none,           &none,
          &trans,          &trans,          &trans
       );
 
-      right( cmd_1_layer,
+      right( cmd_1,
          &none,           &none,           &none,            &none,    &none,           &none,
          &none,           &mcr_shift_tab,  &kp TAB,          &none,    &none,           &none,
          &none,           &none,           &none,            &none,    &none,           &none,
          &trans,          &trans,          &trans
       );
 
-      right( macro_1_layer,
+      right( macro_1,
          &none,           &kp C_MUTE,      &kp C_VOL_DN,   &kp C_VOL_UP,    &none,           &none,
          &none,           &kp C_PREV,      &kp C_PP,       &kp C_NEXT,      &none,           &none,
          &none,           &none,           &kp C_BRI_DN,   &kp C_BRI_UP,    &none,           &none,
          &trans,          &trans,          &trans
       );
 
-      right( macro_2_layer,
+      right( macro_2,
          &none,           &kp C_MUTE,      &kp C_VOL_DN,   &kp C_VOL_UP,    &none,           &none,
          &none,           &kp C_PREV,      &kp C_PP,       &kp C_NEXT,      &none,           &none,
          &none,           &none,           &kp C_BRI_DN,   &kp C_BRI_UP,    &none,           &none,
          &trans,          &trans,          &trans
       );
 
-      right( numpad_1_layer,
+      right( numpad_1,
          &kp DOLLAR,      &kp N7,          &kp N8,          &kp N9,         &kp EQUAL,       &none,
          &kp PLUS,        &kp N4,          &kp N5,          &kp N6,         &trans,          &kp PRCNT,
          &kp MINUS,       &kp N1,          &kp N2,          &kp N3,         &kp FSLH,        &kp DOT,
          &kp N0,          &trans,          &trans
       );
 
-      right( numpad_2_layer,
+      right( numpad_2,
          &kp DOLLAR,      &kp N7,          &kp N8,          &kp N9,         &kp EQUAL,       &none,
          &kp PLUS,        &kp N4,          &kp N5,          &kp N6,         &trans,          &kp PRCNT,
          &kp MINUS,       &kp N1,          &kp N2,          &kp N3,         &kp FSLH,        &kp DOT,
          &kp N0,          &trans,          &trans
       );
 
-      // right( arrows_1_layer,
-         // &none,           &none,           &none,           &none,          &none,           &none,
-         // &kp LEFT,        &kp DOWN,        &kp UP,         &kp RIGHT,       &none,           &none,
-         // &none,           &none,           &none,           &none,          &none,           &none,
-         // &trans,          &trans,          &trans
-      // );
+      right( arrows_1,
+         &none,           &none,           &none,          &none,          &none,           &none,
+         &kp LEFT,        &kp DOWN,        &kp UP,         &kp RIGHT,      &none,           &none,
+         &none,           &none,           &none,          &none,          &none,           &none,
+         &trans,          &trans,          &trans
+      );
 
-      // right( arrows_2_layer,
+      // right( arrows_2,
          // &none,           &none,           &none,           &none,          &none,           &none,
          // &kp LEFT,        &kp DOWN,        &kp UP,         &kp RIGHT,       &none,           &none,
          // &none,           &none,           &none,           &none,          &none,           &none,
