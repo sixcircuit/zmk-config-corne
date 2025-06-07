@@ -6,7 +6,6 @@
 #define EXPAND_AND_STRINGIFY(x) STRINGIFY(x)
 #define MACRO(NAME, BINDINGS) \
 mcr_##NAME: mcr_##NAME { \
-   label = EXPAND_AND_STRINGIFY(mcr_##NAME); \
    compatible = "zmk,behavior-macro"; \
    #binding-cells = <0>; \
    wait-ms = <20>; \
@@ -68,19 +67,20 @@ layer_name { \
 #define MACRO_1      12
 #define MACRO_2      13
 #define NUMPAD_1     14
-#define NUMPAD_2     15
+#define VIMNAV_1     15
 #define ARROWS_1     16
 // #define arrows_2  16
 
 / {
 
    behaviors {
-      mtp: mod_tap_preferred {
+      mts: mod_tap_safe {
          compatible = "zmk,behavior-hold-tap";
          #binding-cells = <2>;
          flavor = "tap-preferred";
          tapping-term-ms = <200>;
          bindings = <&kp>, <&kp>;
+         require-prior-idle-ms = <125>;
          display-name = "Mod-Tap-Preferred";
       };
       space_colon_morph: space_colon_morph {
@@ -89,11 +89,63 @@ layer_name { \
          bindings = <&kp SPACE>, <&kp COLON>;
          mods = <(MOD_LSFT | MOD_RSFT)>;
       };
+      ctrl_c: ctrl_c_morph {
+         compatible = "zmk,behavior-mod-morph";
+         #binding-cells = <0>;
+         bindings = <&kp C>, <&kp LC(C)>;
+         mods = <(MOD_LALT)>;
+      };
+      super_shift: super_shift {
+         compatible = "zmk,behavior-tap-dance";
+         #binding-cells = <0>;
+         tapping-term-ms = <250>;
+         bindings = <&sk RSHIFT>, <&caps_word>;
+      };
+      td0: tap_dance_0 {
+         compatible = "zmk,behavior-tap-dance";
+         #binding-cells = <0>;
+         tapping-term-ms = <350>;
+         bindings = <&kp N1>, <&kp N2>, <&kp SEMI>;
+      };
+      lqt: layer_quick_tap {
+         compatible = "zmk,behavior-hold-tap";
+         #binding-cells = <2>;
+         flavor = "tap-preferred";
+         tapping-term-ms = <250>;
+         quick-tap-ms = <350>;
+         bindings = <&mo>, <&kp>;
+      };
+      v_toggle_reright: v_toggle_reright {
+         compatible = "zmk,behavior-tap-dance";
+         #binding-cells = <0>;
+         tapping-term-ms = <250>;
+         bindings = <
+            &lt RERIGHT_1 V
+            &tog RERIGHT_1
+         >;
+      };
+      tog_on: toggle_layer_on_only {
+         compatible = "zmk,behavior-toggle-layer";
+         #binding-cells = <1>;
+         display-name = "Toggle Layer On";
+         toggle-mode = "on";
+      };
+      tog_off: toggle_layer_off_only {
+         compatible = "zmk,behavior-toggle-layer";
+         #binding-cells = <1>;
+         display-name = "Toggle Layer Off";
+         toggle-mode = "off";
+      };
    };
 
    macros {
       MACRO(zmk, &macro_press &kp LSHFT &macro_tap &kp Z &kp M &kp K &macro_release &kp LSHFT);
       MACRO(shift_tab, &macro_press &kp LSHFT &macro_tap &kp TAB &macro_release &kp LSHFT);
+      MACRO(seq, &macro_tap &kp EQUAL &kp EQUAL &kp EQUAL);
+      MACRO(sne, &macro_tap &kp EXCL &kp EQUAL &kp EQUAL);
+      MACRO(lte, &macro_tap &kp LT &kp EQUAL);
+      MACRO(gte, &macro_tap &kp GT &kp EQUAL);
+      MACRO(gg, &macro_tap &kp G &kp G);
    };
 
    conditional_layers {
@@ -103,6 +155,7 @@ layer_name { \
          then-layer = <ARROWS_1>;
       };
    };
+   // TODO: make some better symbol tables for coding. then wrap it up.
 
    keymap {
 
@@ -110,22 +163,22 @@ layer_name { \
 
       hands( base,
 
-         &kp TAB       , &lt OS_1 Q     , &kp W        , &mtp LGUI E  , &kp R           , &kp T ,
-         &mt LCTRL ESC , &lt NUMPAD_1 A , &lt TERM_1 S , &lt CODE_2 D , &lt CODE_1 F    , &kp G ,
-         &sk LSHIFT    , &kp Z          , &kp X        , &kp C        , &lt RERIGHT_1 V , &kp B ,
-         &kp SPACE     , &kp SPACE      , &kp SPACE    ,
-         // &none      , &none          , &none        ,
-         // &none      , &kp SPACE      , &none        ,
-         // &kp LGUI   , &kp SPACE      , &kp LALT     ,
+         &kp TAB      , &lt OS_1 Q     , &kp W           , &mts LGUI E   , &kp R           , &kp T            ,
+         &mt LALT ESC , &lt NUMPAD_1 A , &lt TERM_1 S    , &lqt CODE_2 D , &lt CODE_1 F    , &kp G            ,
+         &super_shift , &kp Z          , &kp X           , &ctrl_c       , &lt RERIGHT_1 V , &kp B            ,
+         &kp SPACE    , &kp SPACE      , &kp SPACE       ,
+         // &none     , &none          , &none           ,
+         // &none     , &kp SPACE      , &none           ,
+         // &kp LGUI  , &kp SPACE      , &kp LALT        ,
 
-         &kp Y         , &kp U          , &mtp LGUI I  , &kp O        , &kp P           , &none ,
-         &kp H         , &kp J          , &kp K        , &kp L        , &kp SEMI        , &none ,
-         &kp N         , &lt RELEFT_1 M , &kp COMMA    , &kp DOT      , &kp FSLH        , &none ,
-         &kp SPACE     , &kp SPACE      , &kp SPACE
-         // &none      , &none          , &none
-         // &kp SPACE  , &none          , &none
-         // &none      , &none          , &none
-         // &kp SPACE  , &ctrlentbspc   , &kp RGUI
+         &kp Y        , &kp U          , &mts LGUI I     , &kp O         , &kp P           , &tog_on VIMNAV_1 ,
+         &kp H        , &lqt SYMB_1 J  , &lqt RELEFT_1 K , &kp L         , &kp SEMI        , &super_shift     ,
+         &kp N        , &lt RELEFT_1 M , &kp COMMA       , &kp DOT       , &kp FSLH        , &none            ,
+         &none        , &none          , &none
+         // &kp SPACE , &kp SPACE      , &kp SPACE
+         // &kp SPACE , &none          , &none
+         // &none     , &none          , &none
+         // &kp SPACE , &ctrlentbspc   , &kp RGUI
 
          /*&trans,&trans,&trans,&trans,&trans,&trans,*/
          /*&trans,&trans,&trans,&trans,&trans,&trans,*/
@@ -138,18 +191,18 @@ layer_name { \
 
       );
 
-      right( right,
-         &none,           &none,           &none,          &none,         &none,       &none,
-         &none,           &kp BSPC,        &kp RET,        &none,         &kp BSPC,       &none,
-         &none,           &kp LC(D),       &kp LC(U),      &none,         &kp BSLH,    &none,
-         &trans,          &trans,          &trans
+      right( reright,
+         &none  , &none     , &none     , &none     , &none    , &none ,
+         &none  , &kp BSPC  , &kp RET   , &kp COLON , &kp SEMI , &none ,
+         &none  , &kp LA(D) , &kp LA(U) , &none     , &kp BSLH , &none ,
+         &trans , &trans    , &trans
       );
 
-      left( left,
-         &none,           &none,           &none,             &none,             &none,           &none,
-         &none,           &kp BSPC,        &none,             &kp RET,           &kp BSPC,        &none,
-         &none,        &none,        &none,            &none,         &none,           &none,
-         &trans,          &trans,          &trans
+      left( releft,
+         &none  , &none     , &none     , &none     , &none     , &none ,
+         &none  , &kp LG(H) , &kp LA(H) , &kp LA(L) , &kp LG(L) , &none ,
+         &none  , &none     , &none     , &none     , &none     , &none ,
+         &trans , &trans    , &trans
       );
 
       right( term_1,
@@ -180,11 +233,15 @@ layer_name { \
          &trans,           &trans,             &trans
       );
 
-      right( symb_1,
-         &none,            &kp PLUS,        &kp AMPS,        &kp PIPE,       &none,           &none,
-         &none,            &kp MINUS,       &kp EXCL,        &kp PRCNT,      &kp STAR,        &none,
-         &none,            &kp EQUAL,       &kp AT,          &kp HASH,       &kp FSLH,        &none,
-         &trans,           &trans,          &trans
+      // &macro_tap &kp EQUAL &kp EQUAL &kp EQUAL
+      // &macro_tap &kp MINUS &kp GT                 // ->
+      // &macro_tap &kp AMPERSAND &kp AMPERSAND      // &&
+
+      left( symb_1,
+         &none  , &none  , &mcr_lte , &mcr_gte , &none  , &none ,
+         &none  , &kp LT , &mcr_sne , &mcr_seq , &kp GT , &none ,
+         &none  , &none  , &none    , &none    , &none  , &none ,
+         &trans , &trans , &trans
       );
 
       right( symb_2,
@@ -194,11 +251,16 @@ layer_name { \
          &trans,           &trans,          &trans
       );
 
-      right( os_1,
-         &none,           &kp C_MUTE,      &kp C_VOL_DN,   &kp C_VOL_UP,    &none,  &studio_unlock,
-         &none,           &kp C_PREV,      &kp C_PP,       &kp C_NEXT,      &none,           &none,
-         &none,           &none,           &kp C_BRI_DN,   &kp C_BRI_UP,    &none,           &none,
-         &trans,          &trans,          &trans
+      hands( os_1,
+         &bootloader , &trans     , &trans       , &trans       , &trans , &trans      ,
+         &trans      , &trans     , &trans       , &trans       , &trans , &trans      ,
+         &trans      , &trans     , &trans       , &trans       , &trans , &trans      ,
+         &trans      , &trans     , &trans       ,
+
+         &none       , &kp C_MUTE , &kp C_VOL_DN , &kp C_VOL_UP , &none  , &bootloader ,
+         &none       , &kp C_PREV , &kp C_PP     , &kp C_NEXT   , &none  , &none       ,
+         &none       , &none      , &kp C_BRI_DN , &kp C_BRI_UP , &none  , &none       ,
+         &trans      , &trans     , &trans
       );
 
       right( os_2,
@@ -236,11 +298,16 @@ layer_name { \
          &kp N0,          &trans,          &trans
       );
 
-      right( numpad_2,
-         &kp DOLLAR,      &kp N7,          &kp N8,          &kp N9,         &kp EQUAL,       &none,
-         &kp PLUS,        &kp N4,          &kp N5,          &kp N6,         &trans,          &kp PRCNT,
-         &kp MINUS,       &kp N1,          &kp N2,          &kp N3,         &kp FSLH,        &kp DOT,
-         &kp N0,          &trans,          &trans
+      hands( vimnav_1,
+         &none             , &none     , &none     , &none     , &none , &none             ,
+         &tog_off VIMNAV_1 , &none     , &none     , &none     , &none , &none             ,
+         &none             , &none     , &none     , &none     , &none , &none             ,
+         &none             , &none     , &none     ,
+
+         &none             , &none     , &mcr_gg   , &kp LS(G) , &none , &tog_off VIMNAV_1 ,
+         &none             , &kp LA(D) , &kp LA(U) , &none     , &none , &none             ,
+         &none             , &kp LA(J) , &kp LA(K) , &none     , &none , &none             ,
+         &none             , &trans    , &trans
       );
 
       right( arrows_1,
