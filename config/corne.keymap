@@ -32,10 +32,10 @@ layer_name { \
 layer_name { \
    display-name = EXPAND_AND_STRINGIFY(layer_name); \
    bindings = < \
-      &trans &trans &trans &trans &trans &trans rt1 rt2 rt3 rt4 rt5 rt6 \
-      &trans &trans &trans &trans &trans &trans rm1 rm2 rm3 rm4 rm5 rm6 \
-      &trans &trans &trans &trans &trans &trans rb1 rb2 rb3 rb4 rb5 rb6 \
-      &trans &trans &trans rth1 rth2 rth3 \
+      &trans     &trans &trans &trans &trans &trans rt1 rt2 rt3 rt4 rt5 rt6 \
+      &to l_base &trans &trans &trans &trans &trans rm1 rm2 rm3 rm4 rm5 rm6 \
+      &trans     &trans &trans &trans &trans &trans rb1 rb2 rb3 rb4 rb5 rb6 \
+      &trans     &trans &trans rth1 rth2 rth3 \
    >; \
 }
 
@@ -81,6 +81,10 @@ layer_name { \
 &lt {
    tapping-term-ms = <TAPPING_TERM>;
    require-prior-idle-ms = <PRIOR_IDLE>;
+};
+
+&sl {
+    release-after-ms = <10000>;
 };
 
 / {
@@ -193,21 +197,33 @@ layer_name { \
          bindings = <&kon LGUI>, <&kp L>, <&koff LGUI>;
          ignored-key-positions = <>;
       };
-      num_td_a: num_td_a {
-         compatible = "zmk,behavior-tap-dance";
-         label = "num_td";
+      lg_sh: lg_sh {
+         compatible = "zmk,behavior-tri-state";
          #binding-cells = <0>;
-         tapping-term-ms = <TAPPING_TERM>;
-         bindings =
-            <&lt l_numpad A>,
-            <&lon l_numpad>;
+         bindings = <&kon LGUI>, <&kp LS(H)>, <&koff LGUI>;
+         ignored-key-positions = <>;
       };
-      alt_a_td_fix: alt_a_td_fix {
-         compatible = "zmk,behavior-mod-morph";
+      lg_sl: lg_sl {
+         compatible = "zmk,behavior-tri-state";
          #binding-cells = <0>;
-         bindings =  <&num_td_a>, <&kp LA(A)>;
-         mods = <MOD_LALT>;
+         bindings = <&kon LGUI>, <&kp LS(L)>, <&koff LGUI>;
+         ignored-key-positions = <>;
       };
+      // num_td_a: num_td_a {
+         // compatible = "zmk,behavior-tap-dance";
+         // label = "num_td";
+         // #binding-cells = <0>;
+         // tapping-term-ms = <TAPPING_TERM>;
+         // bindings =
+            // <&lt l_numpad A>,
+            // <&lon l_numpad>;
+      // };
+      // alt_a_td_fix: alt_a_td_fix {
+         // compatible = "zmk,behavior-mod-morph";
+         // #binding-cells = <0>;
+         // bindings =  <&num_td_a>, <&kp LA(A)>;
+         // mods = <MOD_LALT>;
+      // };
    };
 
    macros {
@@ -275,7 +291,7 @@ layer_name { \
          // &kp LGUI   , &kp SPACE      , &kp LALT       ,
 
          &kp Y        , &kp U          , &kp I          , &kp O          , &kp P           , &lon l_vimnav ,
-         &kp H        , &lqt l_symb1 J , &lqt l_symb2 K , &kp L          , &semi_colon     , &super_shift  ,
+         &kp H        , &lqt l_symb1 J , &lqt l_symb2 K , &kp L          , &semi_colon     , &sl l_toglayer,
          &kp N        , &lt l_releft M , &kp COMMA      , &dot_excl      , &sklgui_qmark   , &none         ,
          &none        , &none          , &none
          // &lm l_releft LGUI , &none          , &none
@@ -308,7 +324,7 @@ layer_name { \
          // &none  , &kp LG(H) , &kp LA(H)       , &kp LA(L)         , &kp LG(L)     , &none  ,
          // &none  , &none     , &none           , &kp LS(LA(LG(K))) , &kp LA(LG(K)) , &none  ,
 
-         &none  , &none             , &kp LS(TAB) , &lg_tab   , &none         , &none  ,
+         &none  , &lg_sh            , &kp LS(TAB) , &lg_tab   , &lg_sl        , &none  ,
          &none  , &lg_h             , &kp LA(H)   , &kp LA(L) , &lg_l         , &none  ,
          &none  , &kp LS(LA(LG(Z))) , &none       , &none     , &kp LA(LG(Z)) , &none  ,
          &trans , &trans            , &trans      ,
@@ -330,7 +346,7 @@ layer_name { \
       right( code_2,
          &none  , &none     , &kp AMPS          , &kp PIPE  , &none            , &none ,
          &none  , &kp UNDER , &kp DOUBLE_QUOTES , &kp GRAVE , &kp SINGLE_QUOTE , &none ,
-         &none  , &kp MINUS , &none             , &none     , &none            , &none ,
+         &none  , &kp MINUS , &kp PLUS          , &none     , &none            , &none ,
          &trans , &trans    , &trans
       );
 
@@ -372,27 +388,27 @@ layer_name { \
       );
 
       hands( numpad_1,
-         &none          , &none  , &kp DOLLAR , &kp RET   , &none     , &none     ,
-         &loff l_numpad , &none  , &kp MINUS  , &kp STAR  , &kp PLUS  , &none     ,
-         &none          , &none  , &none      , &kp UNDER , &kp FSLH  , &none     ,
-         &trans         , &trans , &trans     ,
+         &none      , &none  , &kp DOLLAR , &kp RET   , &none     , &none     ,
+         &to l_base , &none  , &kp MINUS  , &kp STAR  , &kp PLUS  , &none     ,
+         &none      , &none  , &none      , &kp UNDER , &kp FSLH  , &none     ,
+         &trans     , &trans , &trans     ,
 
-         &none          , &kp N7 , &kp N8     , &kp N9    , &kp EQUAL , &none     ,
-         &kp BSPC       , &kp N4 , &kp N5     , &kp N6    , &kp N0    , &kp PRCNT ,
-         &kp EQUAL      , &kp N1 , &kp N2     , &kp N3    , &kp DOT   , &none     ,
-         &trans         , &trans , &trans
+         &none      , &kp N7 , &kp N8     , &kp N9    , &kp EQUAL , &none     ,
+         &kp BSPC   , &kp N4 , &kp N5     , &kp N6    , &kp N0    , &kp PRCNT ,
+         &kp EQUAL  , &kp N1 , &kp N2     , &kp N3    , &kp DOT   , &none     ,
+         &trans     , &trans , &trans
       );
 
       hands( vimnav_1,
-         &none          , &none     , &none     , &none     , &none , &none          ,
-         &loff l_vimnav , &none     , &none     , &none     , &none , &none          ,
-         &none          , &none     , &none     , &none     , &none , &none          ,
-         &none          , &kp LA(D) , &none     ,
+         &none      , &none     , &none     , &none     , &none , &none          ,
+         &to l_base , &none     , &none     , &none     , &none , &none          ,
+         &none      , &none     , &none     , &none     , &none , &none          ,
+         &none      , &kp LA(D) , &none     ,
 
-         &none          , &none     , &mcr_gg   , &kp LS(G) , &none , &loff l_vimnav ,
-         &none          , &kp LA(D) , &kp LA(U) , &none     , &none , &none          ,
-         &none          , &kp LA(J) , &kp LA(K) , &none     , &none , &none          ,
-         &none          , &trans    , &trans
+         &none      , &none     , &mcr_gg   , &kp LS(G) , &none , &loff l_vimnav ,
+         &none      , &kp LA(D) , &kp LA(U) , &none     , &none , &none          ,
+         &none      , &kp LA(J) , &kp LA(K) , &none     , &none , &none          ,
+         &none      , &trans    , &trans
       );
 
       right( arrows_1,
@@ -402,16 +418,16 @@ layer_name { \
          &trans,          &trans,          &trans
       );
 
-      hands( tog_layer,
-         &none          , &none     , &none     , &none     , &none , &none          ,
-         &loff l_vimnav , &none     , &none     , &none     , &none , &none          ,
-         &none          , &none     , &none     , &none     , &none , &none          ,
-         &none          , &kp LA(D) , &none     ,
+      hands( toglayer,
+         &none  , &none        , &none      , &none       , &none         , &none ,
+         &none  , &to l_numpad , &to l_term , &to l_code2 , &to l_code1   , &none ,
+         &none  , &none        , &none      , &none       , &to l_reright , &none ,
+         &trans , &trans       , &trans     ,
 
-         &none          , &none     , &mcr_gg   , &kp LS(G) , &none , &loff l_vimnav ,
-         &none          , &kp LA(D) , &kp LA(U) , &none     , &none , &none          ,
-         &none          , &kp LA(J) , &kp LA(K) , &none     , &none , &none          ,
-         &none          , &trans    , &trans
+         &none  , &none        , &none      , &none       , &none         , &none ,
+         &none  , &none        , &none      , &none       , &none         , &none ,
+         &none  , &none        , &none      , &none       , &none         , &none ,
+         &trans , &trans       , &trans
       );
    };
 };
