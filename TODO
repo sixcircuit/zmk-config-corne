@@ -1,5 +1,31 @@
 
-= todo
-   - look into lthumb layer for app switching. ctrl tab, ctrl shift tab, etc.
-   - also keyboard maestro to switch to apps?
+= if you have trouble with layer taps, you can try this guys timeless config.
+   - https://github.com/urob/zmk-config
+
+
+x todo
+   / look into lthumb layer for app switching. ctrl tab, ctrl shift tab, etc.
+   x also keyboard maestro to switch to apps?
    x try tap hold layer switch on home row asdf hjkl
+
+x keyboard wrap up
+   x do copy paste single keys or hold on c and v?
+   x do swapper for alt tab and iterm windows.
+   x remove gui key from right hand and middle fingers.
+   x set standard timeouts with #define, or define your own layer tap
+   x make sure all hold taps have tap preferred and the timeout set properly so you have to hold the key pretty good and so it works as a tap on rollover if it's shorter than the timeout.
+      x just get used to holding the keys.
+      x I think it's actually just the gui keys you need to work on.
+      x the other hold taps work well.
+      x and you don't want to overdo it in the wrong direction because you're going to get faster with the symbols.
+   x look over the symbols one more time, because you do a lot of back and forth shit.
+   / maybe you can put enter in the same place on all of them?
+      / inner index?
+   / maybe move the gui keys all together to a different layer where you can sticky key it.
+
+   / you can bury gui someplace do long as you get copy paste and new tab, close tab, reopen tab, new window, new incognito window, switch profiles, for chrome.
+   / maybe you hold down c for chrome.
+   / and c/v are on releft.
+   / and you fix where the other scoot key is.
+
+   x make sure your configs are good and restart everything.
