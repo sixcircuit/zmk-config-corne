@@ -73,14 +73,14 @@ layer_name { \
 // #define PRIOR_IDLE 125
 // #define TAPPING_TERM 250
 
-&mt {
-   tapping-term-ms = <TAPPING_TERM>;
-   require-prior-idle-ms = <PRIOR_IDLE>;
-};
+// &mt {
+   // tapping-term-ms = <TAPPING_TERM>;
+   // require-prior-idle-ms = <PRIOR_IDLE>;
+// };
 
 &lt {
    tapping-term-ms = <TAPPING_TERM>;
-   require-prior-idle-ms = <PRIOR_IDLE>;
+   // require-prior-idle-ms = <PRIOR_IDLE>;
 };
 
 &sl {
@@ -234,8 +234,15 @@ layer_name { \
       MACRO(lte, &macro_tap &kp LT &kp EQUAL);
       MACRO(gte, &macro_tap &kp GT &kp EQUAL);
       MACRO(gg, &macro_tap &kp G &kp G);
+      MACRO(peq, &macro_tap &kp PLUS &kp EQUAL);
+      MACRO(meq, &macro_tap &kp MINUS &kp EQUAL);
+      MACRO(arwfn, &macro_tap &kp EQUAL &kp GT);
       MACRO(the, &macro_tap &kp T &kp H &kp E &kp SPACE);
+      MACRO(ca_ca, &macro_tap &kp LA(A) &kp LA(A));
+      MACRO(ca_cn, &macro_tap &kp LA(A) &kp LA(N));
       MACRO(dot_fs, &macro_tap &kp DOT &kp FSLH);
+      MACRO(goto_line, &macro_tap &kp SEMI &kp L &kp L &to l_numpad);
+      MACRO(endl, &macro_tap &kp BSLH &kp N);
       // MACRO(lgoff, &macro_tap &koff LGUI &koff LGUI);
       /**
       * Temporarily switches to a layer (`&mo`) while a modifier is held.
@@ -267,22 +274,13 @@ layer_name { \
       };
    };
 
-   conditional_layers {
-      compatible = "zmk,conditional-layers";
-      tri_layer {
-         if-layers = <l_numpad l_term>;
-         then-layer = <l_arrows>;
-      };
-   };
-   // TODO: make some better symbol tables for coding. then wrap it up.
-
    keymap {
 
       compatible = "zmk,keymap";
 
       hands( base,
 
-         &kp TAB       , &lt l_os1 Q    , &kp W          , &kp E          , &kp R           , &kp T         ,
+         &kp TAB       , &lt l_os1 Q    , &kp W          , &lt l_arrows E , &kp R           , &kp T         ,
          &mt LALT ESC  , &lt l_numpad A , &lt l_term S   , &lqt l_code2 D , &lt l_code1 F   , &kp G         ,
          &super_shift  , &kp Z          , &kp X          , &ctrl_c        , &lt l_reright V , &kp B         ,
          &sk LGUI      , &kp SPACE      , &kp SPACE      ,
@@ -313,26 +311,26 @@ layer_name { \
       );
 
       right( reright,
-         &none  , &none        , &none   , &none       , &none    , &none ,
-         &none  , &kp BSPC     , &kp RET , &mcr_the    , &kp FSLH , &none ,
-         &none  , &kp LA(BSPC) , &none   , &mcr_dot_fs , &none    , &none ,
+         &none  , &none        , &kp LC(U) , &none       , &none    , &none ,
+         &none  , &kp BSPC     , &kp RET   , &kp LA(H)   , &kp FSLH , &none ,
+         &none  , &kp LA(BSPC) , &kp LC(D) , &mcr_dot_fs , &none    , &none ,
          &trans , &trans       , &trans
       );
 
       hands( releft,
-         // &none  , &none     , &kp LS(LG(TAB)) , &kp LG(TAB)       , &none         , &none  ,
-         // &none  , &kp LG(H) , &kp LA(H)       , &kp LA(L)         , &kp LG(L)     , &none  ,
-         // &none  , &none     , &none           , &kp LS(LA(LG(K))) , &kp LA(LG(K)) , &none  ,
+         // &none , &none             , &kp LS(LG(TAB)) , &kp LG(TAB)       , &none         , &none      ,
+         // &none , &kp LG(H)         , &kp LA(H)       , &kp LA(L)         , &kp LG(L)     , &none      ,
+         // &none , &none             , &none           , &kp LS(LA(LG(K))) , &kp LA(LG(K)) , &none      ,
 
-         &none  , &lg_sh            , &kp LS(TAB) , &lg_tab   , &lg_sl        , &none  ,
-         &none  , &lg_h             , &kp LA(H)   , &kp LA(L) , &lg_l         , &none  ,
-         &none  , &kp LS(LA(LG(Z))) , &none       , &none     , &kp LA(LG(Z)) , &none  ,
-         &trans , &trans            , &trans      ,
+         &none    , &lg_sh            , &kp LS(TAB)     , &lg_tab           , &lg_sl        , &none      ,
+         &none    , &lg_h             , &kp LA(H)       , &kp LA(L)         , &lg_l         , &none      ,
+         &none    , &kp LS(LA(LG(Z))) , &none           , &kp LA(LG(Z))     , &mcr_ca_ca    , &mcr_ca_cn ,
+         &trans   , &trans            , &trans          ,
 
-         &trans , &trans            , &trans      , &trans    , &trans        , &trans ,
-         &trans , &trans            , &trans      , &trans    , &trans        , &trans ,
-         &trans , &trans            , &trans      , &trans    , &trans        , &trans ,
-         &trans , &trans            , &trans
+         &trans   , &trans            , &trans          , &trans            , &trans        , &trans     ,
+         &trans   , &trans            , &trans          , &trans            , &trans        , &trans     ,
+         &trans   , &trans            , &trans          , &trans            , &trans        , &trans     ,
+         &trans   , &trans            , &trans
       );
 
 
@@ -344,9 +342,9 @@ layer_name { \
       );
 
       right( code_2,
-         &none  , &none     , &kp AMPS          , &kp PIPE  , &none            , &none ,
-         &none  , &kp UNDER , &kp DOUBLE_QUOTES , &kp GRAVE , &kp SINGLE_QUOTE , &none ,
-         &none  , &kp MINUS , &kp PLUS          , &none     , &none            , &none ,
+         &none  , &none     , &kp AMPS          , &kp PIPE  , &none            , &none     ,
+         &none  , &kp UNDER , &kp DOUBLE_QUOTES , &kp GRAVE , &kp SINGLE_QUOTE , &mcr_endl ,
+         &none  , &kp MINUS , &kp PLUS          , &kp EXCL  , &kp BSLH         , &none     ,
          &trans , &trans    , &trans
       );
 
@@ -362,10 +360,10 @@ layer_name { \
       );
 
       left( symb_1,
-         &none  , &none  , &mcr_lte , &mcr_gte , &none    , &none ,
-         &none  , &kp LT , &mcr_sne , &mcr_seq , &kp GT   , &none ,
-         &none  , &none  , &none    , &none    , &none    , &none ,
-         &trans , &trans , &trans
+         &none  , &none    , &mcr_lte , &mcr_gte , &none      , &none ,
+         &none  , &kp LT   , &mcr_sne , &mcr_seq , &kp GT     , &none ,
+         &none  , &mcr_meq , &mcr_peq , &none    , &mcr_arwfn , &none ,
+         &trans , &trans   , &trans
       );
 
       left( symb_2,
@@ -388,15 +386,15 @@ layer_name { \
       );
 
       hands( numpad_1,
-         &none      , &none  , &kp DOLLAR , &kp RET   , &none     , &none     ,
-         &to l_base , &none  , &kp MINUS  , &kp STAR  , &kp PLUS  , &none     ,
-         &none      , &none  , &none      , &kp UNDER , &kp FSLH  , &none     ,
-         &trans     , &trans , &trans     ,
+         &none      , &none   , &kp DOLLAR , &kp RET   , &none     , &none     ,
+         &to l_base , &trans  , &kp MINUS  , &kp PLUS  , &kp STAR  , &kp FSLH  ,
+         &none      , &none   , &none      , &none     , &kp UNDER , &none     ,
+         &trans     , &trans  , &trans     ,
 
-         &none      , &kp N7 , &kp N8     , &kp N9    , &kp EQUAL , &none     ,
-         &kp BSPC   , &kp N4 , &kp N5     , &kp N6    , &kp N0    , &kp PRCNT ,
-         &kp EQUAL  , &kp N1 , &kp N2     , &kp N3    , &kp DOT   , &none     ,
-         &trans     , &trans , &trans
+         &none      , &kp N7  , &kp N8     , &kp N9    , &kp EQUAL , &none     ,
+         &kp BSPC   , &kp N4  , &kp N5     , &kp N6    , &kp N0    , &kp PRCNT ,
+         &kp EQUAL  , &kp N1  , &kp N2     , &kp N3    , &kp DOT   , &none     ,
+         &kp RET    , &kp RET , &kp RET
       );
 
       hands( vimnav_1,
